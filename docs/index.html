@@ -145,13 +145,13 @@ textarea {
 console.log("Hey!\nGlad you're looking at the elements and such, but I would prefer if ya didn't.\nThanks!\n\n-S");
 
 function textUser(text) {
-	let txt=document.createElement("p")
+	let txt=document.createElement("span")
 	txt.className="textUser"
 	txt.innerHTML=text.replace(/\n/g, "<br/>").replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;')
 	document.getElementsByName("output")[0].appendChild(txt)
 }
 function textResp(text) {
-	let txt=document.createElement("p")
+	let txt=document.createElement("span")
 	txt.className="textResp"
 	txt.innerHTML=text.replace(/\n/g, "<br/>").replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;')
 	document.getElementsByName("output")[0].appendChild(txt)
