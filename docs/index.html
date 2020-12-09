@@ -35,7 +35,6 @@ textarea {
 
 .out {
 	padding-top: 20px;
-	display: table;
 	overflow-y: auto;
 	font-size: 80%;
 	font-family: "San Francisco";
@@ -154,14 +153,18 @@ console.log("Hey!\nGlad you're looking at the elements and such, but I would pre
 function textUser(text) {
 	let txt=document.createElement("div")
 	txt.className="textUser"
-	txt.innerHTML=text.replace(/\n/g, "<br/>").replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;')
+	txt.innerHTML=text
 	document.getElementsByName("output")[0].appendChild(txt)
+	linebreak = document.createElement("br");
+	txt.appendChild(linebreak);
 }
 function textResp(text) {
 	let txt=document.createElement("div")
 	txt.className="textResp"
-	txt.innerHTML=text.replace(/\n/g, "<br/>").replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;')
+	txt.innerHTML=text
 	document.getElementsByName("output")[0].appendChild(txt)
+	linebreak = document.createElement("br");
+	txt.appendChild(linebreak);
 }
 function callAPI() {
 	sId=document.getElementsByName("session_id")[0].value;
