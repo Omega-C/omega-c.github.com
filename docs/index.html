@@ -34,26 +34,30 @@ textarea {
 }
 
 .out {
-	padding-top: 20px;
+	padding: 2px;
 	overflow-y: auto;
-	font-size: 80%;
-	font-family: "San Francisco";
-	width: 100%;
-	height: 60%;
 	background: #E6E6E6;
 	color: #2F3337;
 	border-color: #BBC0C4;
 	border-radius: 10px;
 	box-shadow: 0px 16px 32px 0px rgba(0,0,0,0.2);
 	cursor: default;
+	display: block;
+	width: 100%;
+	height: 80%;
 }
 .out > * {
+	font-size: 80%;
+	font-family: "San Francisco";
 	display: inline-block;
 	max-inline-size: 50%;
 	border-radius: 20px;
 	padding: 10px;
+	white-space: pre;
 }
-
+.out *::after {
+	content: "h";
+}
 
 .top-dropdown {
 	border: -1px solid #ABB0B4;
@@ -151,20 +155,16 @@ textarea {
 console.log("Hey!\nGlad you're looking at the elements and such, but I would prefer if ya didn't.\nThanks!\n\n-S");
 
 function textUser(text) {
-	let txt=document.createElement("div")
+	let txt=document.createElement("p")
 	txt.className="textUser"
 	txt.innerHTML=text
 	document.getElementsByName("output")[0].appendChild(txt)
-	linebreak = document.createElement("br");
-	txt.appendChild(linebreak);
 }
 function textResp(text) {
-	let txt=document.createElement("div")
+	let txt=document.createElement("p")
 	txt.className="textResp"
 	txt.innerHTML=text
 	document.getElementsByName("output")[0].appendChild(txt)
-	linebreak = document.createElement("br");
-	txt.appendChild(linebreak);
 }
 function callAPI() {
 	sId=document.getElementsByName("session_id")[0].value;
