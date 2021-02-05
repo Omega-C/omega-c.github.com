@@ -17,4 +17,4 @@ class Application extends React.Component {
   render() {return (<Map {...this.props}>{`${this.state.place}${this.state.pos}`}</Map>);}
 }
 
-ReactDOM.render(<Application height={600} type="place"/>,document.getElementById("app"));
+ReactDOM.render(<Application height="100%" width="100%" type="place"/>,document.getElementById("app"));
