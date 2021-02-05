@@ -1,7 +1,7 @@
 //short little react hello world
 class Map extends React.Component {
   defaults(property,def) {return((property in this.props)?this.props[property]:def);}
-  render() {return(<iframe style={{width:this.defaults("width",500),height:this.defaults("height",500),border:0}} frameBorder={0} src={`https://www.google.com/maps/embed/v1/${this.defaults("type","search")}?q=${this.defaults("location",this.props.children)}&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8`}/>);}
+  render() {return(<iframe style={{width:this.defaults("width",500),height:this.defaults("height",500),border:5}} frameBorder={5} src={`https://www.google.com/maps/embed/v1/${this.defaults("type","search")}?q=${this.defaults("location",this.props.children)}&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8`}/>);}
 }
 
 class Application extends React.Component {
