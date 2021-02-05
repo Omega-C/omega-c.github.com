@@ -21,7 +21,7 @@ class Application extends React.Component {
     }
   }
   dealWithPos(position) {
-    this.state.position=` near ${position.coords.latitude}, ${position.coords.longitude}`
+    this.state.pos=` near ${position.coords.latitude}, ${position.coords.longitude}`
   }
   render() {
     return (<Map {...this.props}>{`${this.state.place}${this.state.pos}`}</Map>);
