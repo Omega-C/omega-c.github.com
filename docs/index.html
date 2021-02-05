@@ -1,217 +1,48 @@
-<DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
-
 	<head>
-		<title>Magnus Phoenix, Intelligent Chatbot</title>
-		<!--<link rel="stylesheet" href="/files/main.css">-->
-		<style>
-@font-face {
-	font-family: "San Francisco";
-	font-weight: 400;
-	src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-regular-webfont.woff");
-}
-body * {
-	font-family: Arial;
-}
-textarea {
-	resize: none;
-	outline: none;
-}
-.textUser {
-	color: #FFFFFF;
-	background: #218aff;
-	float: right;
-}
-.textResp {
-	background: #d0d0d5;
-}
-.session_id {
-	width: 50px;
-}
-.message {
-	width: 95%;
-	height: 50px;
-}
-
-.out {
-	padding: 2px;
-	overflow-y: auto;
-	background: #E6E6E6;
-	color: #2F3337;
-	border-color: #BBC0C4;
-	border-radius: 10px;
-	box-shadow: 0px 16px 32px 0px rgba(0,0,0,0.2);
-	cursor: default;
-	display: block;
-	width: 100%;
-	height: 80%;
-}
-.out > * {
-	font-size: 80%;
-	font-family: "San Francisco";
-	display: inline-block;
-	max-inline-size: 50%;
-	border-radius: 20px;
-	padding: 10px;
-	white-space: pre;
-}
-.out *::after {
-	content: "h";
-}
-
-.top-dropdown {
-	border: -1px solid #ABB0B4;
-	text-align: center;
-	background: #D0D0D0;
-	color: #F9F9F9;
-	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-	width: 100%;
-	height: 40px;
-	cursor: pointer;
-}
-.top-dropdown > .top-dropdown-content {
-	border: 1px solid #9BA0A4;
-	text-align: center;
-	display: none;
-	border-radius: 10px;
-	color: #F9F9F9;
-	background-color: #C6C6C6;
-	position: relative;
-	z-index: 2;
-	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-}
-.top-dropdown:hover .top-dropdown-content {
-	display: block;
-}
-			
-			
-.input-box * {
-	border: 1px solid #9BA0A4;
-	border-radius: 5px;
-	font: 8%;
-	font-family: monospace;
-	outline: none;
-}
-.input-box * > div {
-	border: none;
-}
-.input-box > form {
-	border: none;
-}
-			
-			
-.details {
-	display: inline-block;
-	background: #F0F0F0;
-	color: #2F3337;
-	border-color: #BBC0C4;
-	border-radius: 5px;
-	padding-bottom: 10px;
-	padding-right: 10px;
-	padding-top: 2px;
-	padding-left: 2px;
-	box-shadow: 0px 8px 12px 0px rgba(0,0,0,0.2);
-}
-		</style>
+		<title>test app</title>
+		<link rel="stylesheet" type="text/css" href="/main.css" media="screen"/>
 	</head>
-
 	<body>
-		<div class="top-dropdown">
-			<h1>Magnus Phoenix Chatbot</h1>
-			<div class="top-dropdown-content"><h4>This is a chatbot that uses OpenAI's GPT-3 to act like a person and some python I wrote to make and store memories based on interactions.</h4>
-			<h6>This was made by Magnus Artificial Agents with opertunity from OpenAI.<br/>(Name: Spencer R, Github: Omega-C, Youtube: ImagineExistance)</h6></div>
-		</div>
-
-		<br/>
-
-		<div name="output" class="out"></div>
-
-		<br/>
-
-		<div class="input-box">
-			<form onclick="return false;">
-				<textarea placeholder="message" name="message" class="message" ></textarea>
-				<br/>
-				<input type="button" onclick="toggleMenu();" value="hide/show" style="cursor: pointer;" />
-				<input type=submit value="send" onclick="callAPI();" style="cursor: pointer;" />
-				<input type="button" value="undo" onclick="goBack();" style="cursor: pointer;" />
-				<input type="button" value="save" onclick="save();" style="cursor: pointer;" />
-				<input type="text" name="saveName" value="AIConversation" />
-				<br/>
-				<br/>
-				<div id="details" class="details">
-					<input type="text" name="session_id" placeholder="ID" class="session_id" />
-					<br/>
-					<input type="text" name="user_name" placeholder="user's name" />
-					<br/>
-					<input type="text" name="bot_name" placeholder="chatbot's name" />
-				</div>
-			</form>
-		</div>
-
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js" ></script>
-		<!--<script src="/files/main.js"></script>-->
-		<script>
-console.log("Hey!\nGlad you're looking at the elements and such, but I would prefer if ya didn't.\nThanks!\n\n-S");
-
-function textUser(text) {
-	let txt=document.createElement("p")
-	txt.className="textUser"
-	txt.innerHTML=text
-	document.getElementsByName("output")[0].appendChild(txt)
+		<!--<script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+		<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>-->
+		<script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+		<script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+		<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+		<script src="/main.js" type="text/jsx">
+		//short little react hello world
+class Map extends React.Component {
+  defaults(property,def) {
+    return((property in this.props)?this.props[property]:def);
+  }
+  render() {
+    return(<iframe style={{width:this.defaults("width",500),height:this.defaults("height",500),border:0}} frameBorder={0} src={`https://www.google.com/maps/embed/v1/${this.defaults("type","search")}?q=${this.defaults("location",this.props.children)}&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8`}/>);
+  }
 }
-function textResp(text) {
-	let txt=document.createElement("p")
-	txt.className="textResp"
-	txt.innerHTML=text
-	document.getElementsByName("output")[0].appendChild(txt)
+
+class Application extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state={place:"Red Lobster"};//its an inside joke
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.dealWithPos.bind(this),(p)=>{},{enableHighAccuracy:true});
+    }
+    else {
+      alert("results will not pertain :,(");
+      this.state.pos="";
+    }
+  }
+  dealWithPos(position) {
+    this.state.position=`${position.coords.latitude}, ${position.coords.longitude}`
+  }
+  render() {
+    return (<Map {...this.props}>{`${this.state.place}{this.state.pos}`}</Map>);
+  }
 }
-function callAPI() {
-	sId=document.getElementsByName("session_id")[0].value;
-	uName=document.getElementsByName("user_name")[0].value;
-	bName=document.getElementsByName("bot_name")[0].value;
-	text=document.getElementsByName("message")[0].value;
-	textUser(text)
-	return false
-	$.getJSON(`/api?session=${encodeURIComponent(sId)}&text=${encodeURIComponent(text)}&from=${encodeURIComponent(uName)}&responder=${encodeURIComponent(bName)}`).done(function(data){
-		docdat=document.getElementsByName("output")[0].value+`${uName}: ${text}\n--------\n${data["From"]}: ${data["Text"]}\n--------\n`
-		document.getElementsByName("output")[0].value=docdat
-	})
-	return false;
-}
-function goBack() {
-	return false
-	sId=document.getElementsByName("session_id")[0].value;
-	$.getJSON(`/api?session=${encodeURIComponent(sId)}&back=true`).done(function(data){})
-	docdat=document.getElementsByName("output")[0].value.split("\n--------\n").slice(0,-2).join("\n--------\n")
-	if (docdat!=""){
-		docdat+="\n--------\n"
-	}
-	document.getElementsByName("output")[0].value=docdat
-}
-function save() {
-	return false
-	sId=document.getElementsByName("session_id")[0].value
-	saveName=document.getElementsByName("saveName")[0].value
-	$.getJSON(`/api?session=${encodeURIComponent(sId)}&save=${saveName}`).done(function(data){})
-	let a=document.createElement("a")
-	a.href=`/files/database/${saveName}.conversation`
-	a.download=`${saveName}.conversation`
-	a.style="display: none;"
-	document.body.appendChild(a)
-	a.click()
-	document.body.removeChild(a)
-}
-function toggleMenu(){
-	elem=document.getElementById("details")
-	if (elem.style.display=="none") {
-		elem.style.display="inline-block"
-	}
-	else {
-		elem.style.display="none"
-	}
-}
+
+ReactDOM.render(<Application height={600}/>,document.getElementById("mountNode"));
 		</script>
-
+		<div id="app"></div>
 	</body>
 </html>
