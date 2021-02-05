@@ -10,13 +10,13 @@
 		<script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
 		<script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
 		<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
-		<script src="/main.js" type="text/jsx">
+		<script type="text/jsx">
 		//short little react hello world
-class Map extends React.Component {
-  defaults(property,def) {
-    return((property in this.props)?this.props[property]:def);
-  }
-  render() {
+		class Map extends React.Component {
+  			defaults(property,def) {
+				return((property in this.props)?this.props[property]:def);
+  			}
+ 			render() {
     return(<iframe style={{width:this.defaults("width",500),height:this.defaults("height",500),border:0}} frameBorder={0} src={`https://www.google.com/maps/embed/v1/${this.defaults("type","search")}?q=${this.defaults("location",this.props.children)}&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8`}/>);
   }
 }
