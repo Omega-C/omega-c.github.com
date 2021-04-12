@@ -1,1 +1,193 @@
+<DOCTYPE html>
+<html>
+	<head>
+		<!--Made by Omega-C on github. API by OpenAI. Idea (and lots of the api involved code) from MrCheeze on github
+		Part of Magician AGI Technologies property. magic-agi.com (sometimes up sometimes not but I own the server and the domain)
+		Support trans rights and all that, ya dinguses-->
+		<title>MuseNet N' Chill</title>
+		<meta property="og:title" content="MuseNet N' Chill ♫ ♩ ♪"/>
+		<meta property="og:type" content="website"/>
+		<meta property="og:url" content="/"/>
+		<meta property="og:image" content="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVR42mP0EC/9z0AEYBxVSF+FAOK9EkmXFlqCAAAAAElFTkSuQmCC"/>
+		<meta property="og:description" content="A simple OpenAI MuseNet utilising web app."/>
+		<meta name="theme-color" content="#481775"/>
+		<meta name="twitter:card" content="summary_large_image"/>
+		<style>
+      /*remind me to add some css*/
+			#instDiv {
+				white-space:pre;
+			}
+		</style>
+	</head>
+	<body>
+		<button id="callrun" onclick="Run();">Generate</button>
+		<button id="pauseButton" onclick="pauseAll();">Pause</button>
+		<button id="togPresets" onclick="onclicktoggle('presets');">Presets</button>
+		<div id="presets" style="display:none;">
+			<div id="autoplayDiv">Autoplay	<input id="autoplay" type="checkbox" onclick="preventCheck(event,'autorun');"></div>
+			<div id="autorunDiv">AutoGenerate	<input id="autorun" type="checkbox" disabled></div>
+			<div id="autosaveDiv">AutoSave Encoding	<input id="autosave" type="checkbox">(Cannot restore previous music)</div>
+			<div id="tempDiv">Temperature	<input id="temp" type="number" value=1></div>
+			<div id="truncDiv">Truncation	<input id="trunc" type="number" value=30></div>
+			<div id="tempDiv">Length	<input id="length" type="number" value=200></div>
+			<select id="genre">
+				<optgroup id="Random" label="Random"><option value="[random]">Random Genre</option></optgroup>
+				<optgroup id="Default" label="Default"></optgroup>
+				<optgroup id="Other" label="Other"></optgroup>
+			</select>
+			<br/>
+			<button id="togInstruments" onclick="onclicktoggle('instruments')">Instruments</button>
+			<div id="instruments" style="display:none;">
+				<div id="instDiv">Piano	<input type="checkbox" id="inst0" checked="checked"></div>
+				<div id="instDiv">Strings	<input type="checkbox" id="inst1" checked="checked"></div>
+				<div id="instDiv">Winds	<input type="checkbox" id="inst2" checked="checked"></div>
+				<div id="instDiv">Drums	<input type="checkbox" id="inst3" checked="checked"></div>
+				<div id="instDiv">Harp	<input type="checkbox" id="inst4" checked="checked"></div>
+				<div id="instDiv">Guitar	<input type="checkbox" id="inst5" checked="checked"></div>
+				<div id="instDiv">Bass	<input type="checkbox" id="inst6" checked="checked"></div>
+			</div>
+			<br/>
+			<textarea placeholder="encoding" id="encoding"></textarea>
+			<br/>
+			<button id="togBody" onclick="onclicktoggle('APIBody');">Show API Body</button>
+			<textarea id="APIBody" style="display:none;"></textarea>
+		</div>
+		<div id="outputs">
+			<div id="part1"><audio controls="controls" id="audio1"></audio><textarea id="dc1"></textarea></div>
+			<div id="part2"><audio controls="controls" id="audio2"></audio><textarea id="dc2"></textarea></div>
+			<div id="part3"><audio controls="controls" id="audio3"></audio><textarea id="dc3"></textarea></div>
+			<div id="part4"><audio controls="controls" id="audio4"></audio><textarea id="dc4"></textarea></div>
+		</div>
+		<script>
+			/*holy fuck, thank you for writing yout code mrcheeze. I barely know JS in full honesty and you saved me days on stack overflow.*/
+			var audioIds=["audio1","audio2","audio3","audio4"];
+			var divCorrespIds=["dc1","dc2","dc3","dc4"];
+			var genresWell=["chopin","mozart","rachmaninoff","ladygaga","country","disney","jazz","bach","beethoven","journey","thebeatles","video","broadway","franksinatra","bluegrass","tchaikovsky"];
+			var genresExtra=["liszt","everything","ragtime","andrehazes","cocciante","thecranberries","ligabue","metallica","traffic","philcollins","nineinchnails","thepretenders","sugarray","grandfunkrailroad","ron","ellington","fleetwoodmac","thebeachboys","kool & the gang","foreigner","tlc","scottjames","benfoldsfive","smashmouth","oasis","allsaints","donnasummer","weezer","bjork","mariahcarey","berte","cheaptrick","caroleking","thecars","gganderson","robertpalmer","zucchero","alicecooper","vanhalen","brucehornsby","coolio","jimmybuffett","lobo","badcompany","eminem","creedenceclearwaterrevival","deeppurple","shearinggeorge","robbiewilliams","dalla","ub40","lindaronstadt","sinatra","inxs","jonimitchell","michaeljackson","last","devo","shaniatwain","korn","brooksgarth","sweet","thewho","roxette","bowiedavid","beegees","renefroger","mina","estefangloria","mccartney","theventures","carboni","simplyred","santana","jewel","meatloaf","giorgia","nofx","rickymartin","thecure","thetemptations","tozzi","beck","eiffel65","jenniferlopez","reelbigfish","patsycline","richardcliff","styx","acdc","brucespringsteen","michaelgeorge","blondie","pinkfloyd","oldfieldmike","redhotchilipeppers","therollingstones","morandi","heart","robertaflack","pantera","alabama","jethrotull","hanson","mosch","ludwigvanbeethoven","dvorak","chrisrea","guns n' roses","duranduran","ericclapton","bettemidler","bwitched","gordonlightfoot","thegrassroots","chicago","whitezombie","michaelbolton","paulsimon","marillion","thepointersisters","theanimals","cher","haydn","aerosmith","supertramp","littleriverband","america","tonyorlando","tompetty","thecorrs","aliceinchains","kiss","prince","toto","vanmorrison","wagner","cashjohnny","annielennox","enya","thedoobiebrothers","thetragicallyhip","rush","laurapausini","stevemillerband","simonandgarfunkel","fiorellamannoia","olivianewton-john","carlysimon","elvispresley","vangelis","bobdylan","bbking","vengaboys","paoli","thehollies","alainsouchon","pooh","raf","fiorello","lionelrichie","jimihendrix","theeverlybrothers","limpbizkit","donhenley","georgeharrison","threedognight","johnmellencamp","carpenters","raycharles","basie","billyocean","scorpions","royorbison","whitneyhouston","ironmaiden","jovanotti","alanjackson","barrymanilow","hueylewis","kennyloggins","chopinfrederic","talkingheads","themonkees","rem","jeanmicheljarre","michelezarrillo","eurythmics","thedoors","guesswho","miller","thefourseasons","matiabazar","tompettyandtheheartbreakers","chickcorea","scottjoplin","amedeominghi","bryanadams","paulaabdul","rossivasco","billyjoel","daniele","claudedebussy","gilbert & sullivan","chakakhan","nirvana","garbage","andreabocelli","johnnyrivers","emerson, lake & palmer","theallmanbrothersband","zappa","boston","mango","barbrastreisand","willsmith","ozzyosbourne","janetjackson","antonellovenditti","u2","humperdinckengelbert","jamiroquai","zero","chuckberry","spicegirls","ledzeppelin","masini","thekinks","eagles","billyidol","alanismorissette","joecocker","jimcroce","bobmarley","blacksabbath","stonetemplepilots","silverchair","paulmccartney","blur","nek","greenday","thepolice","depechemode","rageagainstthemachine","madonna","rogerskenny","brooks & dunn","883","thedrifters","amygrant","herman","toriamos","eltonjohn","britneyspears","lennykravitz","celentano","ringostarr","neildiamond","aqua","oscarpeterson","joejackson","moby","collinsphil","leosayer","takethat","electriclightorchestra","pearljam","marcanthony","borodin","petshopboys","stevienicks","hollybuddy","turnertina","annaoxa","zztop","sting","themoodyblues","ruggeri","creed","claudebolling","renzoarbore","erasure","elviscostello","airsupply","tinaturner","leali","petergabriel","nodoubt","bread","huey lewis & the news","brandy","level42","radiohead","georgebenson","wonderstevie","thesmashingpumpkins","cyndilauper","rodstewart","bush","ramazzotti","bobseger","theshadows","gershwin","cream","biagioantonacci","steviewonder","nomadi","direstraits","davidbowie","amostori","thealanparsonsproject","johnlennon","crosbystillsnashandyoung","battiato","kansas","clementi","richielionel","yes","brassensgeorges","steelydan","jacksonmichael","buddyholly","earthwindandfire","natkingcole","therascals","bonjovi","alanparsons","backstreetboys","glencampbell","howardcarpendale","thesupremes","villagepeople","blink-182","jacksonbrowne","sade","lynyrdskynyrd","foofighters","2unlimited","battisti","hall & oates","stansfieldlisa","genesis","boyzone","theoffspring","tomjones","davematthewsband","johnelton","neilyoung","dionnewarwick","aceofbase","marilynmanson","taylorjames","rkelly","grandi","sublime","edvardgrieg","tool","bachjohannsebastian","patbenatar","celinedion","queen","soundgarden","abba","drdre","defleppard","dominofats","realmccoy","natalieimbruglia","hole","spinners","arethafranklin","reospeedwagon","indian","movie","scottish","irish","african","taylorswift","shakira","blues","latin","katyperry","world","kpop","africandrum","michaelbuble","rihanna","gospel","beyonce","chinese","arabic","adele","kellyclarkson","theeagles","handel","rachmaninov","schumann","christmas","dance","punk","natl_anthem","brahms","rap","ravel","burgmueller","other","schubert","granados","albeniz","mendelssohn","debussy","grieg","moszkowski","godowsky","folk","mussorgsky","kids","balakirev","hymns","verdi","hummel","deleted","delibes","saint-saens","puccini","satie","offenbach","widor","songs","stravinsky","vivaldi","gurlitt","alkan","weber","strauss","traditional","rossini","mahler","soler","sousa","telemann","busoni","scarlatti","stamitz","classical","jstrauss2","gabrieli","nielsen","purcell","donizetti","kuhlau","gounod","gibbons","weiss","faure","holst","spohr","monteverdi","reger","bizet","elgar","czerny","sullivan","shostakovich","franck","rubinstein","albrechtsberger","paganini","diabelli","gottschalk","wieniawski","lully","morley","sibelius","scriabin","heller","thalberg","dowland","carulli","pachelbel","sor","marcello","ketterer","rimsky-korsakov","ascher","bruckner","janequin","anonymous","kreutzer","sanz","joplin","susato","giuliani","lassus","palestrina","smetana","berlioz","couperin","gomolka","daquin","herz","campion","walthew","pergolesi","reicha","polak","holborne","hassler","corelli","cato","azzaiolo","anerio","gastoldi","goudimel","dussek","prez","cimarosa","byrd","praetorius","rameau","khachaturian","machaut","gade","perosi","gorzanis","smith","haberbier","carr","marais","glazunov","guerrero","cabanilles","losy","roman","hasse","sammartini","blow","zipoli","duvernoy","aguado","cherubini","victoria","field","andersen","poulenc","d'aragona","lemire","krakowa","maier","rimini","encina","banchieri","best","galilei","warhorse","gypsy","soundtrack","encore","roblaidlow","nationalanthems","benjyshelton","ongcmu","crosbystillsnashyoung","smashingpumpkins","aaaaaaaaaaa","alanismorrisette","animenz","onedirection","nintendo","disneythemes","gunsnroses","rollingstones","juliancasablancas","abdelmoinealfa","berckmansdeoliveira","moviethemes","beachboys","davemathews","videogamethemes","moabberckmansdeoliveira","unknown","cameronleesimpson","johannsebastianbach","thecarpenters","elo","nightwish","blink182","emersonlakeandpalmer","tvthemes"];
+			for(let i=0;i<genresWell.length;i++){let optTag=document.createElement("option");optTag.innerHTML=genresWell[i];optTag.value=genresWell[i];document.getElementById("Default").appendChild(optTag)}
+			for(let i=0;i<genresExtra.length;i++){let optTag=document.createElement("option");optTag.innerHTML=genresExtra[i];optTag.value=genresExtra[i];document.getElementById("Other").appendChild(optTag)}
 
+			class API{
+				static b64ToBinary(data) {
+					/*removed a bit of redundancy. Why make a dataURI when you only use the data?*/
+					var rawData=window.atob(data);
+					var arr=new Uint8Array(new ArrayBuffer(rawData.length));
+					for(let i=0;i<rawData.length;i++) {
+						arr[i]=rawData.charCodeAt(i);
+					}
+					return(arr);
+				}
+				static blobExtend(data,type) {
+					return(URL.createObjectURL(new Blob([this.b64ToBinary(data)],{type:type})));
+				}
+				static constructBody() {
+					var genre=document.getElementById("genre").value;
+					if(genre==="[random]") {
+						genre=genresWell.concat(genresExtra)[Math.floor(Math.random()*(genresWell.length+genresExtra.length))];
+					}
+					return({
+						genre:genre,
+						instrument:{
+							piano:document.getElementById("inst0").checked,
+							strings:document.getElementById("inst1").checked,
+							winds:document.getElementById("inst2").checked,
+							drums:document.getElementById("inst3").checked,
+							harp:document.getElementById("inst4").checked,
+							guitar:document.getElementById("inst5").checked,
+							bass:document.getElementById("inst6").checked
+						},
+						encoding:document.getElementById("encoding").value,
+						temperature:parseFloat(document.getElementById("temp").value),
+						truncation:parseFloat(document.getElementById("trunc").value),
+						generationLength:parseFloat(document.getElementById("length").value),
+						audioFormat:"mp3"
+					});
+				}
+				static extendContentFetch(bodyObject) {
+					return(fetch("https://musenet.openai.com/sample",{"method":"POST","headers":{"Content-Type":"application/json"},"body":JSON.stringify(bodyObject)}).then(resp=>resp.json()));
+				}
+			}
+
+			function onclicktoggle(id) {
+				var el=document.getElementById(id);
+				if(el.style.display==="none") {
+					el.style.display="block";
+				} else {
+					el.style.display="none";
+				}
+			}
+
+			function pauseAll() {
+				for(let i=0;i<audioIds.length;i++) {
+					document.getElementById(audioIds[i]).pause();
+				}
+			}
+
+			function preventCheck(event,id) {
+				if(event.target.checked) {
+					for(let i=0;i<audioIds.length-1;i++) {
+						document.getElementById(audioIds[i]).onended=(()=>document.getElementById(audioIds[i+1]).play())
+					}
+					document.getElementById(audioIds[audioIds.length-1]).onended=(()=>document.getElementById(audioIds[0]).play())
+					document.getElementById(audioIds[0]).play()
+					document.getElementById(id).disabled=false;
+				} else {
+					for(let i=0;i<audioIds.length-1;i++) {
+						document.getElementById(audioIds[i]).onended=(()=>{})
+					}
+					document.getElementById(audioIds[audioIds.length-1]).onended=(()=>{})
+					document.getElementById(id).checked=false;
+					document.getElementById(id).disabled=true;
+				}
+			}
+
+			function putToBodyHidden(content) {
+				document.getElementById("APIBody").innerHTML=content;
+			}
+
+			function elementAudioSet(id,partition) {
+				var data=partition["audioFile"]
+				document.getElementById(id).src=API.blobExtend(data.substring(2,data.length-1),"audio/mp3");
+			}
+
+			function elementEncodingSet(id,partition) {
+				var data=partition["encoding"]
+				document.getElementById(id).innerHTML=data;
+			}
+
+			function Run() {
+				document.getElementById("callrun").disabled=true;
+				if(document.getElementById("autoplay").checked) {
+					for(let i=0;i<audioIds.length-1;i++) {
+						document.getElementById(audioIds[i]).onended=(()=>document.getElementById(audioIds[i+1]).play())
+					}
+					document.getElementById(audioIds[audioIds.length-1]).onended=(()=>document.getElementById(audioIds[0]).play())
+					document.getElementById(audioIds[0]).play()
+				} else {
+					for(let i=0;i<audioIds.length-1;i++) {
+						document.getElementById(audioIds[i]).onended=(()=>{})
+					}
+					document.getElementById(audioIds[audioIds.length-1]).onended=(()=>{})
+				}
+				var body=API.constructBody();
+				putToBodyHidden(JSON.stringify(body));
+				API.extendContentFetch(body).then(resp=>{
+					for(let i=0;i<audioIds.length;i++) {
+						elementAudioSet(audioIds[i],resp.completions[i]);
+						elementEncodingSet(divCorrespIds[i],resp.completions[i]);
+					}
+					if(document.getElementById("autosave").checked) {
+						elementEncodingSet("encoding",resp.completions[0]);
+					}
+					document.getElementById("callrun").disabled=false;
+					if(document.getElementById("autoplay").checked) {
+						document.getElementById(audioIds[0]).play();
+						if(document.getElementById("autorun").checked) {
+							document.getElementById(audioIds[audioIds.length-1]).onended=(()=>Run())
+						}
+					}
+				}).catch((error)=>{alert(error)});
+			}
+		</script>
+	</body>
+</html>
