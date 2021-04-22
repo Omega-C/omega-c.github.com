@@ -4,8 +4,9 @@
 		<!--Made by Omega-C on github. API by OpenAI. Idea (and lots of the api involved code) from MrCheeze on github
 		Part of Magician AGI Technologies property. magic-agi.com (sometimes up sometimes not but I own the server and the domain)
 		Support trans rights and all that, ya dinguses-->
-		<title>MuseNet N' Chill</title>
-		<meta property="og:title" content="MuseNet N' Chill ♫ ♩ ♪"/>
+		<title>MuseNet Music Generator</title>
+		<link rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABlBMVEVPEoH///8UEjLYAAAAAWJLR0QB/wIt3gAAAAd0SU1FB+UEFgIgEIEYbroAAAAMSURBVAjXY2AgDQAAADAAAceqhY4AAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMDQtMjJUMDI6MzI6MTYrMDA6MDDzcYynAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIxLTA0LTIyVDAyOjMyOjE2KzAwOjAwgiw0GwAAAABJRU5ErkJggg==" type="image/png">
+		<meta property="og:title" content="MuseNet Music Maker ♫ ♩ ♪"/>
 		<meta property="og:type" content="website"/>
 		<meta property="og:url" content="/"/>
 		<meta property="og:image" content="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVR42mP0EC/9z0AEYBxVSF+FAOK9EkmXFlqCAAAAAElFTkSuQmCC"/>
@@ -13,53 +14,148 @@
 		<meta name="theme-color" content="#481775"/>
 		<meta name="twitter:card" content="summary_large_image"/>
 		<style>
-      /*remind me to add some css*/
+			html {
+				background-color:#24262F;
+			}
+			* {
+				font-family: Verdana, Helvetica, sans-serif;
+				font-size: 12.5px;
+				outline:none;
+			}
 			#instDiv {
 				white-space:pre;
+			}
+			.buttonClassTop {
+				color:#DDDDDD;
+				background-color:#3A3C47;
+				border-radius:10px;
+				border-width:0px;
+				display:inline-block;
+				user-select:none;
+				margin-bottom:5px;
+			}
+			.buttonClassTop:active {
+				color:#CFCFCF;
+				background-color:#34363F;
+			}
+			.buttonClassTop:disabled {
+				color:#BFBFBF;
+				background-color:#292A35;
+			}
+			#callrun, #pauseButton, #togPresets, #togAudio {
+				width:calc(50% - 3px);
+			}
+			#presets {
+				padding-left:8px;
+				padding-bottom:5px;
+				color:#DDDDDD;
+				background-color:#3A3C47;
+				border-radius:10px;
+				border-width:0px;
+				display:block;
+				user-select:none;
+				margin-bottom:5px;
+			}
+			#presets>div>input,select {
+				float: right;
+			}
+			#presets>* {
+				margin-bottom:7px;
+			}
+			#outputs {
+				background-color:#2D2F38;
+				padding:10px;
+				border-radius:10px;
+			}
+			#outputs>div {
+				margin-bottom:10px;
+			}
+			#outputs>div>* {
+				display:block;
+				width:100%;
+				margin-bottom:5px;
+			}
+			#outputs>div>textarea {
+				resize:none;
+				height:40px;
+				border-radius:10px;
+			}
+			#outputs>div>audio {
+				height:45px;
+			}
+			#APIBody {
+				width:100%;
+				height:150px;
+				resize:none;
+				border-radius:10px;
+			}
+			#encoding {
+				width:100%;
+				height:125px;
+				resize:none;
+				border-radius:10px;
+			}
+			#instruments {
+				width:50%;
+				display:inline-block;
+				padding:5px;
+				background-color:#2D2F38;
+				border-radius:10px;
+			}
+			#instruments>div>input {
+				float:right;
+			}
+			#instruments>div {
+				margin-bottom:7px;
+			}
+			#temp, #trunc, #length, #genre {
+				width:120px;
+			}
+			#autoplay, #autorun {
+				margin-right:30px;
 			}
 		</style>
 	</head>
 	<body>
-		<button id="callrun" onclick="Run();">Generate</button>
-		<button id="pauseButton" onclick="pauseAll();">Pause</button>
-		<button id="togPresets" onclick="onclicktoggle('presets');">Presets</button>
-		<div id="presets" style="display:none;">
-			<div id="autoplayDiv">Autoplay	<input id="autoplay" type="checkbox" onclick="preventCheck(event,'autorun');"></div>
-			<div id="autorunDiv">AutoGenerate	<input id="autorun" type="checkbox" disabled></div>
-			<div id="autosaveDiv">AutoSave Encoding	<input id="autosave" type="checkbox">(Cannot restore previous music)</div>
-			<div id="tempDiv">Temperature	<input id="temp" type="number" value=1></div>
-			<div id="truncDiv">Truncation	<input id="trunc" type="number" value=30></div>
-			<div id="tempDiv">Length	<input id="length" type="number" value=200></div>
-			<select id="genre">
+		<button id="callrun" class="buttonClassTop" onclick="Run();">Generate</button>
+		<button id="pauseButton" class="buttonClassTop" onclick="pauseAll();">Pause</button>
+		<button id="togPresets" class="buttonClassTop" onclick="onclicktoggle('presets');">TogglePresets</button>
+		<button id="togAudio" class="buttonClassTop" onclick="onclicktoggle('outputs');">Toggle Output</button>
+		<div id="presets" style="display:block;">
+			<div id="autoplayDiv">Autoplay/AutoGenerate<input id="autorun" type="checkbox" disabled><input id="autoplay" type="checkbox" onclick="preventCheck(event,'autorun');"></div>
+			<!--<div id="autosaveDiv">AutoSave Encoding	<input id="autosave" type="checkbox">(Cannot restore previous music)</div>-->
+			<div id="tempDiv">Temperature<input id="temp" type="number" value="1.2" max="10" min="0" step="0.1"></div>
+			<div id="truncDiv">Truncation<input id="trunc" type="number" value="30"></div>
+			<div id="tempDiv">Length<input id="length" type="number" value=200></div>
+			<div id="genreDiv">Genre<select id="genre">
 				<optgroup id="Random" label="Random"><option value="[random]">Random Genre</option></optgroup>
 				<optgroup id="Default" label="Default"></optgroup>
 				<optgroup id="Other" label="Other"></optgroup>
-			</select>
-			<br/>
+			</select></div>
 			<button id="togInstruments" onclick="onclicktoggle('instruments')">Instruments</button>
 			<div id="instruments" style="display:none;">
-				<div id="instDiv">Piano	<input type="checkbox" id="inst0" checked="checked"></div>
-				<div id="instDiv">Strings	<input type="checkbox" id="inst1" checked="checked"></div>
-				<div id="instDiv">Winds	<input type="checkbox" id="inst2" checked="checked"></div>
-				<div id="instDiv">Drums	<input type="checkbox" id="inst3" checked="checked"></div>
-				<div id="instDiv">Harp	<input type="checkbox" id="inst4" checked="checked"></div>
-				<div id="instDiv">Guitar	<input type="checkbox" id="inst5" checked="checked"></div>
-				<div id="instDiv">Bass	<input type="checkbox" id="inst6" checked="checked"></div>
+				<div id="instDiv">Piano<input type="checkbox" id="inst0" checked="checked"></div>
+				<div id="instDiv">Strings<input type="checkbox" id="inst1" checked="checked"></div>
+				<div id="instDiv">Winds<input type="checkbox" id="inst2" checked="checked"></div>
+				<div id="instDiv">Drums<input type="checkbox" id="inst3" checked="checked"></div>
+				<div id="instDiv">Harp<input type="checkbox" id="inst4" checked="checked"></div>
+				<div id="instDiv">Guitar<input type="checkbox" id="inst5" checked="checked"></div>
+				<div id="instDiv">Bass<input type="checkbox" id="inst6" checked="checked"></div>
 			</div>
 			<br/>
 			<textarea placeholder="encoding" id="encoding"></textarea>
 			<br/>
 			<button id="togBody" onclick="onclicktoggle('APIBody');">Show API Body</button>
-			<textarea id="APIBody" style="display:none;"></textarea>
+			<textarea id="APIBody" style="display:none;" placeholder="API Body" readonly></textarea>
 		</div>
 		<div id="outputs">
-			<div id="part1"><audio controls="controls" id="audio1"></audio><textarea id="dc1"></textarea></div>
-			<div id="part2"><audio controls="controls" id="audio2"></audio><textarea id="dc2"></textarea></div>
-			<div id="part3"><audio controls="controls" id="audio3"></audio><textarea id="dc3"></textarea></div>
-			<div id="part4"><audio controls="controls" id="audio4"></audio><textarea id="dc4"></textarea></div>
+			<div id="part1"><audio controls="controls" id="audio1"></audio><textarea id="dc1" placeholder="audio data" readonly></textarea></div>
+			<div id="part2"><audio controls="controls" id="audio2"></audio><textarea id="dc2" placeholder="audio data" readonly></textarea></div>
+			<div id="part3"><audio controls="controls" id="audio3"></audio><textarea id="dc3" placeholder="audio data" readonly></textarea></div>
+			<div id="part4"><audio controls="controls" id="audio4"></audio><textarea id="dc4" placeholder="audio data" readonly></textarea></div>
 		</div>
 		<script>
-			/*holy fuck, thank you for writing yout code mrcheeze. I barely know JS in full honesty and you saved me days on stack overflow.*/
+			/*thank you for writing yout code mrcheeze. I barely know JS in full honesty and you saved me days on stack overflow.*/
 			var audioIds=["audio1","audio2","audio3","audio4"];
 			var divCorrespIds=["dc1","dc2","dc3","dc4"];
 			var genresWell=["chopin","mozart","rachmaninoff","ladygaga","country","disney","jazz","bach","beethoven","journey","thebeatles","video","broadway","franksinatra","bluegrass","tchaikovsky"];
@@ -162,6 +258,7 @@
 						document.getElementById(audioIds[i]).onended=(()=>document.getElementById(audioIds[i+1]).play())
 					}
 					document.getElementById(audioIds[audioIds.length-1]).onended=(()=>document.getElementById(audioIds[0]).play())
+					pauseAll()
 					document.getElementById(audioIds[0]).play()
 				} else {
 					for(let i=0;i<audioIds.length-1;i++) {
@@ -176,9 +273,6 @@
 						elementAudioSet(audioIds[i],resp.completions[i]);
 						elementEncodingSet(divCorrespIds[i],resp.completions[i]);
 					}
-					if(document.getElementById("autosave").checked) {
-						elementEncodingSet("encoding",resp.completions[0]);
-					}
 					document.getElementById("callrun").disabled=false;
 					if(document.getElementById("autoplay").checked) {
 						document.getElementById(audioIds[0]).play();
@@ -186,7 +280,7 @@
 							document.getElementById(audioIds[audioIds.length-1]).onended=(()=>Run())
 						}
 					}
-				}).catch((error)=>{alert(error)});
+				}).catch((error)=>{alert(error);document.getElementById("callrun").disabled=false});
 			}
 		</script>
 	</body>
