@@ -34,7 +34,7 @@
 				user-select:none;
 				margin-bottom:5px;
 			}
-			.buttonClassTop:active {
+			.buttonClassTop:active, #outputs>div>button:active {
 				color:#CFCFCF;
 				background-color:#34363F;
 			}
@@ -68,20 +68,36 @@
 				border-radius:10px;
 			}
 			#outputs>div {
+				width:calc(50% - 3px);
+				display:inline-block;
 				margin-bottom:10px;
 			}
 			#outputs>div>* {
-				display:block;
-				width:100%;
-				margin-bottom:5px;
+				display:inline-block;
+				margin-top:5px;
 			}
 			#outputs>div>textarea {
+				width:100%;
 				resize:none;
-				height:40px;
+				height:15%;
 				border-radius:10px;
+			}
+			#outputs>div>button {
+				margin:5px;
+				color:#DDDDDD;
+				background-color:#3A3C47;
+				border-radius:10px;
+				border-width:0px;
+				display:inline-block;
+				user-select:none;
+				float:right;
+				width:calc(25% - 10px);
+				margin-bottom:0px;
+				height:45px;
 			}
 			#outputs>div>audio {
 				height:45px;
+				width:75%;
 			}
 			#APIBody {
 				width:100%;
@@ -90,8 +106,9 @@
 				border-radius:10px;
 			}
 			#encoding {
-				width:100%;
-				height:125px;
+				width:calc(100% - 10px);
+				padding-right:10px;
+				height:16%;
 				resize:none;
 				border-radius:10px;
 			}
@@ -149,10 +166,10 @@
 			<textarea id="APIBody" style="display:none;" placeholder="API Body" readonly></textarea>
 		</div>
 		<div id="outputs">
-			<div id="part1"><audio controls="controls" id="audio1"></audio><textarea id="dc1" placeholder="audio data" readonly></textarea></div>
-			<div id="part2"><audio controls="controls" id="audio2"></audio><textarea id="dc2" placeholder="audio data" readonly></textarea></div>
-			<div id="part3"><audio controls="controls" id="audio3"></audio><textarea id="dc3" placeholder="audio data" readonly></textarea></div>
-			<div id="part4"><audio controls="controls" id="audio4"></audio><textarea id="dc4" placeholder="audio data" readonly></textarea></div>
+			<div id="part1"><audio controls="controls" id="audio1"></audio><button onclick="downloadIdSource('audio1','audio1.mp3');">Save</button><textarea id="dc1" placeholder="output encoding" readonly></textarea></div>
+			<div id="part2"><audio controls="controls" id="audio2"></audio><button onclick="downloadIdSource('audio2','audio2.mp3');">Save</button><textarea id="dc2" placeholder="output encoding" readonly></textarea></div>
+			<div id="part3"><audio controls="controls" id="audio3"></audio><button onclick="downloadIdSource('audio3','audio3.mp3');">Save</button><textarea id="dc3" placeholder="output encoding" readonly></textarea></div>
+			<div id="part4"><audio controls="controls" id="audio4"></audio><button onclick="downloadIdSource('audio4','audio4.mp3');">Save</button><textarea id="dc4" placeholder="output encoding" readonly></textarea></div>
 		</div>
 		<script>
 			/*thank you for writing yout code mrcheeze. I barely know JS in full honesty and you saved me days on stack overflow.*/
@@ -203,6 +220,16 @@
 				static extendContentFetch(bodyObject) {
 					return(fetch("https://musenet.openai.com/sample",{"method":"POST","headers":{"Content-Type":"application/json"},"body":JSON.stringify(bodyObject)}).then(resp=>resp.json()));
 				}
+			}
+
+			function downloadIdSource(id,name) {
+				var a=document.createElement("a");
+				a.href=document.getElementById(id).src;
+				a.download=name;
+				a.hidden=true;
+				document.body.appendChild(a);
+				a.click();
+				document.body.removeChild(a);
 			}
 
 			function onclicktoggle(id) {
