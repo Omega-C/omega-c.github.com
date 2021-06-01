@@ -1,0 +1,140 @@
+<html id="htmlHeadThatWillNotBeUsedAsReference">
+
+<head>
+	<title>Notes</title>
+	<!--This is just a rip off of the console thing I did, but I want something I can jot notes down on nonetheless. Progress will be had later on with replacements and all that jazz.-->
+	<style>
+	* {
+		margin: 0;
+		padding: 0;
+		outline: 0px solid transparent;
+	}
+	
+	#htmlHeadThatWillNotBeUsedAsReference>body>#main {
+		float: left;
+		font-family: Consolas, monaco, monospace;
+		background-color: #FFFFFF;
+		color: black;
+		height: 95%;
+		width: 100%;
+		display: inline-block;
+		overflow-y: auto;
+		white-space: pre-wrap;
+		white-space: -moz-pre-wrap;
+		white-space: -pre-wrap;
+		white-space: -o-pre-wrap;
+		word-wrap: break-word;
+		font-size: 12px;
+	}
+	
+	#htmlHeadThatWillNotBeUsedAsReference>body>button {
+		color: #FFFFFF;
+		border-radius: 0px;
+		font-size: 99%;
+		float: left;
+		margin: 1px;
+		padding: 0px;
+		width: calc(25% - 2px);
+		height: 5%;
+		display: inline-block;
+		outline: none;
+		border-width: 1px;
+		background-color: #7d7e82;
+	}
+	
+	#htmlHeadThatWillNotBeUsedAsReference>body>button:active {
+		background-color: #5d5f63;
+	}
+	
+	#htmlHeadThatWillNotBeUsedAsReference,
+	#htmlHeadThatWillNotBeUsedAsReference>body {
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		width: 100%;
+	}
+	</style>
+</head>
+
+<body><pre id="main" spellcheck=false contenteditable></pre>
+	<div id="log"></div>
+	<button onclick="LoadButton();">Load</button>
+	<button onclick="SaveButton();">Save</button>
+	<button></button>
+	<button></button>
+	<script>
+	if(localStorage.getItem("saved") != null) {
+		document.getElementById("main").innerHTML = localStorage.getItem("saved")
+	};
+	if(localStorage.getItem("rewrites") != null) {
+		rewritePresets = localStorage.getItem("rewrites")
+	} else {
+		rewritePresets = ""
+	}
+	try {
+		if(JSON.parse(localStorage.getItem("saves")) === null) {
+			localStorage.setItem("saves", JSON.stringify({}))
+		}
+	} catch(e) {
+		console.log("rewriting data I think.");
+		localStorage.setItem("saves", JSON.stringify({}))
+	};
+	document.getElementById("main").addEventListener("paste", function(e) {
+		e.preventDefault();
+		var text = (e.originalEvent || e).clipboardData.getData('text/plain');
+		var element = document.createElement("div");
+		element.innerText = text;
+		var text = element.innerHTML;
+		document.execCommand("insertHTML", false, text)
+	});
+
+	function SaveButton() {
+		let fname = prompt("file name");
+		if(fname == "" || fname == null) {
+			return(false)
+		};
+		let files = JSON.parse(localStorage.getItem("saves"));
+		files[fname] = document.getElementById("main").innerHTML;
+		localStorage.setItem("saves", JSON.stringify(files))
+	};
+
+	function LoadButton() {
+		let fname = prompt("file name");
+		if(fname == "" || fname == null) {
+			return(false);
+		};
+		let files = JSON.parse(localStorage.getItem("saves"));
+		if(!(fname in files)) {
+			console.error(`${fname} not found in saves`)
+		} else {
+			document.getElementById("main").innerHTML = files[fname]
+		}
+	};
+	document.addEventListener("keyup", function(e) {
+		localStorage.setItem("saved", document.getElementById("main").innerHTML);
+		return(false)
+	});
+	document.getElementById("main").addEventListener("keydown", function replaceTab(event, element = document.activeElement) {
+		if(event.key === "Tab") {
+			event.preventDefault();
+			let selection = window.getSelection();
+			let range = selection.getRangeAt(0);
+			range.deleteContents();
+			let tab = "	";
+			let node = document.createTextNode(tab);
+			range.insertNode(node);
+			selection.modify("move", "right", "character")
+		}
+	});
+
+	function logElement(name, text) {
+		if(name == null) {
+			document.getElementById("log").textContent += text + "\n"
+		} else {
+			document.getElementById("log").textContent += `${name}: ${text}\n`
+		}
+	}
+	</script>
+</body>
+
+</html>
