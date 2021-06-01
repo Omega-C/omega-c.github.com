@@ -63,8 +63,8 @@
 	<button></button>
 	<button></button>
 	<script>
-	if(localStorage.getItem("saved") != null) {
-		document.getElementById("main").innerHTML = localStorage.getItem("saved")
+	if(localStorage.getItem("savednotes") != null) {
+		document.getElementById("main").innerHTML = localStorage.getItem("savednotes")
 	};
 	if(localStorage.getItem("rewrites") != null) {
 		rewritePresets = localStorage.getItem("rewrites")
@@ -111,7 +111,7 @@
 		}
 	};
 	document.addEventListener("keyup", function(e) {
-		localStorage.setItem("saved", document.getElementById("main").innerHTML);
+		localStorage.setItem("savednotes", document.getElementById("main").innerHTML);
 		return(false)
 	});
 	document.getElementById("main").addEventListener("keydown", function replaceTab(event, element = document.activeElement) {
