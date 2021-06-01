@@ -1,3 +1,4 @@
+
 <html id="htmlHeadThatWillNotBeUsedAsReference">
 
 <head>
@@ -8,6 +9,15 @@
 		margin: 0;
 		padding: 0;
 		outline: 0px solid transparent;
+	}
+	
+	#popup {
+		position:absolute;
+		width:30%;
+		height:40%;
+		background-color:black;
+		color: red;
+		display:none;
 	}
 	
 	#htmlHeadThatWillNotBeUsedAsReference>body>#main {
@@ -58,6 +68,7 @@
 
 <body><pre id="main" spellcheck=false contenteditable></pre>
 	<div id="log"></div>
+	<div id="popup">error</div>
 	<button onclick="LoadButton();">Load</button>
 	<button onclick="SaveButton();">Save</button>
 	<button onclick="download();">Export</button>
