@@ -25,8 +25,9 @@
 		font-family: Consolas, monaco, monospace;
 		background-color: #FFFFFF;
 		color: black;
-		height: 95%;
-		width: 100%;
+		height: calc(95% - 11px);
+		width: calc(100% - 10px);
+		padding:5px;
 		display: inline-block;
 		overflow-y: auto;
 		white-space: pre-wrap;
@@ -34,21 +35,21 @@
 		white-space: -pre-wrap;
 		white-space: -o-pre-wrap;
 		word-wrap: break-word;
-		font-size: 12px;
+		font-size: 15px;
 	}
 	
 	#htmlHeadThatWillNotBeUsedAsReference>body>button {
 		color: #FFFFFF;
-		border-radius: 0px;
+		border-radius: 10px;
 		font-size: 99%;
 		float: left;
 		margin: 1px;
 		padding: 0px;
-		width: calc(25% - 2px);
+		width: calc(20% - 2px);
 		height: 5%;
 		display: inline-block;
 		outline: none;
-		border-width: 1px;
+		border-width: 0px;
 		background-color: #7d7e82;
 	}
 	
@@ -72,7 +73,8 @@
 	<button onclick="LoadButton();">Load</button>
 	<button onclick="SaveButton();">Save</button>
 	<button onclick="download();">Export</button>
-	<button></button>
+	<button>Replacements</button>
+	<button>List Notes</button>
 	<script>
 	if(localStorage.getItem("savednotes") != null) {
 		document.getElementById("main").innerHTML = localStorage.getItem("savednotes")
