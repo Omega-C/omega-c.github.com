@@ -60,7 +60,7 @@
 	<div id="log"></div>
 	<button onclick="LoadButton();">Load</button>
 	<button onclick="SaveButton();">Save</button>
-	<button></button>
+	<button onclick="download();">Export</button>
 	<button></button>
 	<script>
 	if(localStorage.getItem("savednotes") != null) {
@@ -110,6 +110,16 @@
 			document.getElementById("main").innerHTML = files[fname]
 		}
 	};
+
+	function download() {
+		let a=document.createElement("a");
+		a.href=`data:text/html;charset=utf-8,${encodeURIComponent(document.getElementById("main").textContent)}`;
+		a.download=prompt("Name of Note: ")+".txt";
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+	};
+	
 	document.addEventListener("keyup", function(e) {
 		localStorage.setItem("savednotes", document.getElementById("main").innerHTML);
 		return(false)
