@@ -1,5 +1,6 @@
 
-<html id="htmlHeadThatWillNotBeUsedAsReference">
+
+<html>
 
 <head>
 	<title>Notes</title>
@@ -15,12 +16,25 @@
 		position:absolute;
 		width:30%;
 		height:40%;
-		background-color:black;
-		color: red;
+		border: solid black;
+		background-color:white;
+		border-width: 2px;
 		display:none;
 	}
 	
-	#htmlHeadThatWillNotBeUsedAsReference>body>#main {
+	#popup>textarea {
+		resize: none;
+		width:98%;
+		height:83%;
+		margin:1%;
+	}
+	#popup>button {
+		width:98%;
+		height:13%;
+		margin:1%;
+	}
+	
+	#main {
 		float: left;
 		font-family: Consolas, monaco, monospace;
 		background-color: #FFFFFF;
@@ -38,9 +52,9 @@
 		font-size: 15px;
 	}
 	
-	#htmlHeadThatWillNotBeUsedAsReference>body>button {
+	button {
 		color: #FFFFFF;
-		border-radius: 10px;
+		border-radius: 0px;
 		font-size: 99%;
 		float: left;
 		margin: 1px;
@@ -53,12 +67,11 @@
 		background-color: #7d7e82;
 	}
 	
-	#htmlHeadThatWillNotBeUsedAsReference>body>button:active {
+	button:active {
 		background-color: #5d5f63;
 	}
 	
-	#htmlHeadThatWillNotBeUsedAsReference,
-	#htmlHeadThatWillNotBeUsedAsReference>body {
+	html, body {
 		height: 100%;
 		margin: 0;
 		padding: 0;
@@ -68,14 +81,22 @@
 </head>
 
 <body><pre id="main" spellcheck=false contenteditable></pre>
-	<div id="log"></div>
-	<div id="popup">error</div>
+	<div id="popup"><textarea id="replacements" placeholder="JSON for replacements">{"->":"→","/\\":"∧","\\/":"∨","~!":"¬","<→":"↔"}</textarea><button onclick="saveParameters();">Save</button></div>
 	<button onclick="LoadButton();">Load</button>
 	<button onclick="SaveButton();">Save</button>
 	<button onclick="download();">Export</button>
-	<button>Replacements</button>
+	<button onclick="toggle('popup','block')">Replacements</button>
 	<button>List Notes</button>
+
+
 	<script>
+	let replacementParameters={};
+	function saveParameters() {
+		try {
+			replacementParameters=JSON.parse(document.getElementById("replacements").value)
+		} catch(e) {alert("could not parse JSON");alert(e)}
+	};
+	saveParameters();
 	if(localStorage.getItem("savednotes") != null) {
 		document.getElementById("main").innerHTML = localStorage.getItem("savednotes")
 	};
@@ -134,6 +155,10 @@
 	};
 	
 	document.addEventListener("keyup", function(e) {
+		for (const a in replacementParameters) {
+			document.getElementById("main").textContent=document.getElementById("main").textContent.replace(a,replacementParameters[a]);
+		};
+		alert(document.getElementById("main").textContent);
 		localStorage.setItem("savednotes", document.getElementById("main").innerHTML);
 		return(false)
 	});
@@ -150,13 +175,14 @@
 		}
 	});
 
-	function logElement(name, text) {
-		if(name == null) {
-			document.getElementById("log").textContent += text + "\n"
-		} else {
-			document.getElementById("log").textContent += `${name}: ${text}\n`
+	function toggle(elementID,disp) {
+		if (document.getElementById(elementID).style.display=="none") {
+			document.getElementById(elementID).style.display=disp
 		}
-	}
+		else {
+			document.getElementById(elementID).style.display="none"
+		}
+	};
 	</script>
 </body>
 
