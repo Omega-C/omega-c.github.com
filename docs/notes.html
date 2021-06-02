@@ -154,7 +154,7 @@
 		document.body.removeChild(a);
 	};
 	
-	document.getElementById("main").addEventListener("keyup", function(e) {
+	document.addEventListener("keyup", function(e) {
 		for (const a in replacementParameters) {
 			document.getElementById("main").textContent=document.getElementById("main").textContent.replace(a,replacementParameters[a]);
 		};
