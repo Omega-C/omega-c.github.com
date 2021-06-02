@@ -175,8 +175,13 @@
 	document.addEventListener("keyup", function(e) {
 		let text=getCaretText();
 		for (const a in replacementParameters) {
-			text=text.replace(RegExp(a),replacementParameters[a]);
-			document.getElementById("main").innerText=document.getElementById("main").innerText.replace(RegExp(a),replacementParameters[a]);
+			try {
+				text=text.replace(RegExp(a),replacementParameters[a]);
+				document.getElementById("main").innerText=document.getElementById("main").innerText.replace(RegExp(a),replacementParameters[a]);
+			} catch(e) {
+				text=text.replace(a,replacementParameters[a]);
+				document.getElementById("main").innerText=document.getElementById("main").innerText.replace(a,replacementParameters[a]);
+			}
 		};
 		setCaret(text.length);
 		localStorage.setItem("savednotes", document.getElementById("main").innerHTML);
