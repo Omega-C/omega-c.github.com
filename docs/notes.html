@@ -176,8 +176,8 @@
 		let text=getCaretText();
 		for (const a in replacementParameters) {
 			try {
-				text=text.replace(RegExp(a),replacementParameters[a]);
-				document.getElementById("main").innerText=document.getElementById("main").innerText.replace(RegExp(a),replacementParameters[a]);
+				text=text.replace(RegExp(a.replace("\\","\\\\")),replacementParameters[a]);
+				document.getElementById("main").innerText=document.getElementById("main").innerText.replace(RegExp(a.replace("\\","\\\\")),replacementParameters[a]);
 			} catch(e) {
 				text=text.replace(a,replacementParameters[a]);
 				document.getElementById("main").innerText=document.getElementById("main").innerText.replace(a,replacementParameters[a]);
