@@ -81,7 +81,7 @@
 </head>
 
 <body><pre id="main" spellcheck=false contenteditable></pre>
-	<div id="popup"><textarea id="replacements" placeholder="JSON for replacements">{"->":"→","/\\":"∧","\\/":"∨","~!":"¬","<→":"↔"}</textarea><button onclick="saveParameters();">Save</button></div>
+	<div id="popup"><textarea id="replacements" placeholder="JSON for replacements">{"-->":"→","/\\":"∧","\\/":"∨","~!":"¬","<→":"↔","==>":"⇒","--U":"⊃","<⇒":"⇔","=={⇔}":"≡","=={↔}":"≡","D{set}":"𝔻"}</textarea><button onclick="saveParameters();">Save</button></div>
 	<button onclick="LoadButton();">Load</button>
 	<button onclick="SaveButton();">Save</button>
 	<button onclick="download();">Export</button>
@@ -100,9 +100,10 @@
 	}
 	function setCaret(n) {
 		var el = document.getElementById("main")
+		el.normalize()
 		var range = document.createRange()
 		var sel = window.getSelection()
-		range.setStart(el.childNodes[0], n)
+		range.setStart(el.childNodes[0],n)
 		range.collapse(true)
 		sel.removeAllRanges()
 		sel.addRange(range)
