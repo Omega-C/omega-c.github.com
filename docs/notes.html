@@ -90,8 +90,23 @@
 
 
 	<script>
-	/**/
-	
+	/*https://stackoverflow.com/questions/3972014/get-contenteditable-caret-index-position, https://stackoverflow.com/questions/6249095/how-to-set-caretcursor-position-in-contenteditable-element-div*/
+    function getCaretText() {
+		var sel = document.getSelection();
+		sel.modify("extend", "backward", "paragraphboundary");
+		var posS = sel.toString();
+		if(sel.anchorNode != undefined) sel.collapseToEnd();
+		return posS;
+	}
+	function setCaret(n) {
+		var el = document.getElementById("main")
+		var range = document.createRange()
+		var sel = window.getSelection()
+		range.setStart(el.childNodes[0], n)
+		range.collapse(true)
+		sel.removeAllRanges()
+		sel.addRange(range)
+	}
 	/**/
 	let replacementParameters={};
 	function saveParameters() {
@@ -158,9 +173,12 @@
 	};
 	
 	document.addEventListener("keyup", function(e) {
+		let text=getCaretText();
 		for (const a in replacementParameters) {
+			text=text.replace(RegExp(a),replacementParameters[a]);
 			document.getElementById("main").innerText=document.getElementById("main").innerText.replace(RegExp(a),replacementParameters[a]);
 		};
+		setCaret(text.length);
 		localStorage.setItem("savednotes", document.getElementById("main").innerHTML);
 		return(false)
 	});
