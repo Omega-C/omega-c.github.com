@@ -154,11 +154,10 @@
 		document.body.removeChild(a);
 	};
 	
-	document.addEventListener("keyup", function(e) {
+	document.getElementById("main").addEventListener("keyup", function(e) {
 		for (const a in replacementParameters) {
 			document.getElementById("main").textContent=document.getElementById("main").textContent.replace(a,replacementParameters[a]);
 		};
-		alert(document.getElementById("main").textContent);
 		localStorage.setItem("savednotes", document.getElementById("main").innerHTML);
 		return(false)
 	});
