@@ -159,7 +159,7 @@
 	
 	document.addEventListener("keyup", function(e) {
 		for (const a in replacementParameters) {
-			document.getElementById("main").innerText=document.getElementById("main").innerText.replace(RegExp(a),RegExp(replacementParameters[a]));
+			document.getElementById("main").innerText=document.getElementById("main").innerText.replace(RegExp(a),replacementParameters[a]);
 		};
 		localStorage.setItem("savednotes", document.getElementById("main").innerHTML);
 		return(false)
