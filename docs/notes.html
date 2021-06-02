@@ -172,7 +172,7 @@
 		document.body.removeChild(a);
 	};
 	
-	document.addEventListener("keyup", function(e) {
+	document.getElementById("main").addEventListener("keyup", function(e) {
 		let text=getCaretText();
 		for (const a in replacementParameters) {
 			try {
