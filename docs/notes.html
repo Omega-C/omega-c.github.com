@@ -90,6 +90,9 @@
 
 
 	<script>
+	/**/
+	
+	/**/
 	let replacementParameters={};
 	function saveParameters() {
 		try {
@@ -156,7 +159,7 @@
 	
 	document.addEventListener("keyup", function(e) {
 		for (const a in replacementParameters) {
-			document.getElementById("main").textContent=document.getElementById("main").textContent.replace(a,replacementParameters[a]);
+			document.getElementById("main").innerText=document.getElementById("main").innerText.replace(RegExp(a),RegExp(replacementParameters[a]));
 		};
 		localStorage.setItem("savednotes", document.getElementById("main").innerHTML);
 		return(false)
