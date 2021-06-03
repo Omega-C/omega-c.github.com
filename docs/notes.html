@@ -44,10 +44,10 @@
 		padding:5px;
 		display: inline-block;
 		overflow-y: auto;
-		white-space: pre-wrap;
 		white-space: -moz-pre-wrap;
 		white-space: -pre-wrap;
 		white-space: -o-pre-wrap;
+		white-space: pre-wrap;
 		word-wrap: break-word;
 		font-size: 15px;
 	}
@@ -90,20 +90,32 @@
 
 
 	<script>
+	//holy fuck. This is teh worst bodge I've ever made.
 	/*https://stackoverflow.com/questions/3972014/get-contenteditable-caret-index-position, https://stackoverflow.com/questions/6249095/how-to-set-caretcursor-position-in-contenteditable-element-div*/
     function getCaretText() {
 		var sel = document.getSelection();
+		var el = document.getElementById("main")
 		sel.modify("extend", "backward", "paragraphboundary");
 		var posS = sel.toString();
 		if(sel.anchorNode != undefined) sel.collapseToEnd();
-		return posS;
+		let indexAnchor=0;
+		console.log(sel.anchorNode,el.childNodes);
+		for (let i=0;i<el.childNodes.length;i++) {
+			if (el.childNodes[i]==sel.anchorNode) {
+				indexAnchor=i
+			}
+		}
+		if (sel.anchorNode==el) {
+			indexAnchor=el.childNodes.length-1;
+		}
+		return [posS,indexAnchor];
 	}
-	function setCaret(n) {
+	function setCaret(n,y) {
 		var el = document.getElementById("main")
 		el.normalize()
 		var range = document.createRange()
 		var sel = window.getSelection()
-		range.setStart(el.childNodes[0],n)
+		range.setStart(el.childNodes[y],Math.min(n,el.childNodes[y].length))
 		range.collapse(true)
 		sel.removeAllRanges()
 		sel.addRange(range)
@@ -173,18 +185,20 @@
 		document.body.removeChild(a);
 	};
 	
-	document.getElementById("main").addEventListener("keyup", function(e) {
-		let text=getCaretText();
-		for (const a in replacementParameters) {
-			try {
-				text=text.replace(RegExp(a.replace("\\","\\\\")),replacementParameters[a]);
-				document.getElementById("main").innerText=document.getElementById("main").innerText.replace(RegExp(a.replace("\\","\\\\")),replacementParameters[a]);
-			} catch(e) {
-				text=text.replace(a,replacementParameters[a]);
-				document.getElementById("main").innerText=document.getElementById("main").innerText.replace(a,replacementParameters[a]);
-			}
-		};
-		setCaret(text.length);
+	document.getElementById("main").addEventListener("keydown", function(e) {
+		if (String.fromCharCode(e.keyCode).match(/(\w|\d)/g)) {
+			let [text, ynode]=getCaretText();
+			for (const a in replacementParameters) {
+				try {
+					text=text.replace(RegExp(a.replace("\\","\\\\")),replacementParameters[a]);
+					document.getElementById("main").innerText=document.getElementById("main").innerText.replace(RegExp(a.replace("\\","\\\\")),replacementParameters[a]);
+				} catch(e) {
+					text=text.replace(a,replacementParameters[a]);
+					document.getElementById("main").innerText=document.getElementById("main").innerText.replace(a,replacementParameters[a]);
+				}
+			};
+			setCaret(text.length,ynode);
+		}
 		localStorage.setItem("savednotes", document.getElementById("main").innerHTML);
 		return(false)
 	});
