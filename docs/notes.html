@@ -22,10 +22,16 @@
 		display:none;
 	}
 	
-	#popup>textarea, #popup2>textarea {
+	#popup>textarea{
 		resize: none;
 		width:98%;
 		height:83%;
+		margin:1%;
+	}
+	#popup2>textarea {
+		resize: none;
+		width:98%;
+		height:98%;
 		margin:1%;
 	}
 	#popup>button {
@@ -91,26 +97,35 @@
 
 
 	<script>
+	function saveKeep() {
+		localStorage.setItem("savednotes", document.getElementById("main").innerHTML)
+	};
+		
 	function saveParameters() {
 		try {
 			let replacementParameters=JSON.parse(document.getElementById("replacements").value);
+			document.getElementById("main").normalize();
 			for (const a in replacementParameters) {
 				try {
 					document.getElementById("main").innerText=document.getElementById("main").innerText.replace(RegExp(a.replace("\\","\\\\")),replacementParameters[a]);
 				} catch(e) {
 					document.getElementById("main").innerText=document.getElementById("main").innerText.replace(a,replacementParameters[a]);
-				}
+				};
+				saveKeep()
 			};
 		} catch(e) {alert("could not parse JSON");alert(e)}
 	};
+		
 	if(localStorage.getItem("savednotes") != null) {
 		document.getElementById("main").innerHTML = localStorage.getItem("savednotes")
 	};
+		
 	if(localStorage.getItem("rewrites") != null) {
 		rewritePresets = localStorage.getItem("rewrites")
 	} else {
 		rewritePresets = ""
-	}
+	};
+		
 	try {
 		if(JSON.parse(localStorage.getItem("saves")) === null) {
 			localStorage.setItem("saves", JSON.stringify({}))
@@ -119,6 +134,7 @@
 		console.log("rewriting data I think.");
 		localStorage.setItem("saves", JSON.stringify({}))
 	};
+		
 	document.getElementById("main").addEventListener("paste", function(e) {
 		e.preventDefault();
 		var text = (e.originalEvent || e).clipboardData.getData('text/plain');
@@ -141,7 +157,7 @@
 	function LoadButton() {
 		let fname = prompt("file name");
 		if(fname == "" || fname == null) {
-			return(false);
+			return(false)
 		};
 		let files = JSON.parse(localStorage.getItem("saves"));
 		if(!(fname in files)) {
@@ -161,7 +177,7 @@
 	};
 	
 	document.getElementById("main").addEventListener("input", function(e) {
-		localStorage.setItem("savednotes", document.getElementById("main").innerHTML);
+		saveKeep();
 		return(false)
 	});
 	document.getElementById("main").addEventListener("keydown", function replaceTab(event, element = document.activeElement) {
