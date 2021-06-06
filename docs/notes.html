@@ -258,7 +258,7 @@
 		}
 	});
 	
-	document.getElementById("main").addEventListener("keyup", function replaceTab(event) {
+	document.addEventListener("keyup", function replaceTab(event) {
 		if (event.ctrlKey && event.which==81) {
 			toggle("popup","block");
 			toggle("popup2","block");
