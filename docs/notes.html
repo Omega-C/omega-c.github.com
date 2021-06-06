@@ -256,8 +256,8 @@
 			range.insertNode(node);
 			selection.modify("move", "right", "character")
 		};
-		if (e.which == 13) {
-			document.execCommand("insertHTML",false,"<br/>");
+		if (event.which == 13) {
+			document.execCommand("insertHTML",false,"<br/><br/>");
 			return(false)
 		}
 	});
