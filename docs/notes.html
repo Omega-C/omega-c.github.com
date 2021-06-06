@@ -158,7 +158,7 @@
 	};
 	
 	function listFiles() {
-		let text=Object.keys(JSON.parse(localStorage.getItem("saves"))).join(",&#13;&#10;");
+		let text=Object.keys(JSON.parse(localStorage.getItem("saves"))).join(", ");
 		document.getElementById("files").value=text
 	};
 	
