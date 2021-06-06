@@ -14,12 +14,12 @@
 	
 	#popup, #popup2 {
 		position:absolute;
-		width:30%;
-		height:40%;
+		width: 30%;
+		height: 40%;
 		border: solid black;
 		background-color:white;
 		border-width: 2px;
-		display:none;
+		display: none;
 	}
 	
 	#popup>textarea{
@@ -31,7 +31,7 @@
 	#popup2>textarea {
 		resize: none;
 		width:98%;
-		height:98%;
+		height:96%;
 		margin:1%;
 	}
 	#popup>button {
@@ -91,7 +91,7 @@
 	<div id="popup2"><textarea id="files" readonly placeholder="No Files..."></textarea></div>
 	<button onclick="LoadButton();">Load</button>
 	<button onclick="SaveButton();">Save</button>
-	<button onclick="download();">Export</button>
+	<button onclick="download();">Download</button>
 	<button onclick="toggle('popup','block')">Replacements</button>
 	<button onclick="toggle('popup2','block')">List Notes</button>
 
@@ -107,12 +107,12 @@
 			document.getElementById("main").normalize();
 			for (const a in replacementParameters) {
 				try {
-					document.getElementById("main").innerText=document.getElementById("main").innerText.replace(RegExp(a.replace("\\","\\\\")),replacementParameters[a]);
+					document.getElementById("main").innerText=document.getElementById("main").innerText.replaceAll(RegExp(a.replaceAll("\\","\\\\")),replacementParameters[a]);
 				} catch(e) {
-					document.getElementById("main").innerText=document.getElementById("main").innerText.replace(a,replacementParameters[a]);
-				};
-				saveKeep()
+					document.getElementById("main").innerText=document.getElementById("main").innerText.replaceAll(a,replacementParameters[a]);
+				}
 			};
+			saveKeep()
 		} catch(e) {alert("could not parse JSON");alert(e)}
 	};
 		
