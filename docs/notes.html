@@ -256,9 +256,9 @@
 			range.insertNode(node);
 			selection.modify("move", "right", "character")
 		};
-		if (event.which == 13) {
+		if (event.key === "Enter") {
+			event.preventDefault();
 			document.execCommand("insertHTML",false,"<br/>");
-			return(false)
 		}
 	});
 	
