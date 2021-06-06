@@ -255,6 +255,10 @@
 			let node = document.createTextNode(tab);
 			range.insertNode(node);
 			selection.modify("move", "right", "character")
+		};
+		if (e.which == 13) {
+			document.execCommand("insertHTML",false,"<br/>");
+			return(false)
 		}
 	});
 	
