@@ -13,6 +13,7 @@
 	}
 	
 	#popup, #popup2, #popup3 {
+		resize: both;
 		position:absolute;
 		width: 30%;
 		height: 40%;
@@ -20,11 +21,15 @@
 		background-color:white;
 		border-width: 2px;
 		display: none;
-		z-index: auto;
+		z-index: 9;
 	}
 	
 	#popuph, #popup2h, #popup3h {
 		cursor: move;
+	}
+	
+	#popup>*, #popup2>*, #popup3>* {
+		z-index:10;
 	}
 	
 	#popup>textarea{
