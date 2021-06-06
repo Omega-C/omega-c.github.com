@@ -20,13 +20,11 @@
 		background-color:white;
 		border-width: 2px;
 		display: none;
-		z-index: 9;
-		cursor: move;
+		z-index: auto;
 	}
 	
-	#popup>*, #popup2>*, #popup3>* {
-		position:absolute;
-		z-index: 10;
+	#popuph, #popup2h, #popup3h {
+		cursor: move;
 	}
 	
 	#popup>textarea{
@@ -94,9 +92,9 @@
 </head>
 
 <body><pre id="main" spellcheck=true contenteditable></pre>
-	<div id="popup">Replacements<textarea id="replacements" placeholder="JSON for replacements">{"-->":"→","/\\":"∧","\\/":"∨","~!":"¬","<→":"↔","==>":"⇒","--U":"⊃","<⇒":"⇔","=={⇔}":"≡","=={↔}":"≡","D{set}":"𝔻"}</textarea><button onclick="saveParameters();">Apply</button></div>
-	<div id="popup2">Files<textarea id="files" readonly placeholder="No Files..."></textarea></div>
-	<div id="popup3">Other Options (WIP)</div>
+	<div id="popup"><div id="popuph">Replacements</div><textarea id="replacements" placeholder="JSON for replacements">{"-->":"→","/\\":"∧","\\/":"∨","~!":"¬","<→":"↔","==>":"⇒","--U":"⊃","<⇒":"⇔","=={⇔}":"≡","=={↔}":"≡","D{set}":"𝔻"}</textarea><button onclick="saveParameters();">Apply</button></div>
+	<div id="popup2"><div id="popup2h">Files</div><textarea id="files" readonly placeholder="No Files..."></textarea></div>
+	<div id="popup3"><div id="popup3h">Other Options (WIP)</div></div>
 	<button onclick="LoadButton();">Load</button>
 	<button onclick="SaveButton();">Save</button>
 	<button onclick="download();">Download</button>
@@ -104,9 +102,9 @@
 	<script>
 	/*yoink, from https://www.w3schools.com/howto/howto_js_draggable.asp*/
 	
-	dragElement(document.getElementById("popup"));
-	dragElement(document.getElementById("popup2"));
-	dragElement(document.getElementById("popup3"));
+	dragElement(document.getElementById("popuph"));
+	dragElement(document.getElementById("popup2h"));
+	dragElement(document.getElementById("popup3h"));
 	function dragElement(elmnt) {
 	  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 	  if (document.getElementById(elmnt.id + "header")) {
