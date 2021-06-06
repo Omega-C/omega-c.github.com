@@ -12,7 +12,7 @@
 		outline: 0px solid transparent;
 	}
 	
-	#popup, #popup2, #popup3 {
+	.popup {
 		resize: both;
 		position:absolute;
 		width: 30%;
@@ -24,12 +24,13 @@
 		z-index: 9;
 	}
 	
-	#popuph, #popup2h, #popup3h {
+	.popuph {
 		cursor: move;
+		z-index: 10;
 	}
 	
-	#popup>*, #popup2>*, #popup3>* {
-		z-index:10;
+	.popup>* {
+		z-index: 9;
 	}
 	
 	#popup>textarea{
@@ -97,9 +98,9 @@
 </head>
 
 <body><pre id="main" spellcheck=true contenteditable></pre>
-	<div id="popup"><div id="popuph">Replacements</div><textarea id="replacements" placeholder="JSON for replacements">{"-->":"→","/\\":"∧","\\/":"∨","~!":"¬","<→":"↔","==>":"⇒","--U":"⊃","<⇒":"⇔","=={⇔}":"≡","=={↔}":"≡","D{set}":"𝔻"}</textarea><button onclick="saveParameters();">Apply</button></div>
-	<div id="popup2"><div id="popup2h">Files</div><textarea id="files" readonly placeholder="No Files..."></textarea></div>
-	<div id="popup3"><div id="popup3h">Other Options (WIP)</div></div>
+	<div id="popup" class="popup"><div id="popuph" class="popuph">Replacements</div><textarea id="replacements" placeholder="JSON for replacements">{"-->":"→","/\\":"∧","\\/":"∨","~!":"¬","<→":"↔","==>":"⇒","--U":"⊃","<⇒":"⇔","=={⇔}":"≡","=={↔}":"≡","D{set}":"𝔻"}</textarea><button onclick="saveParameters();">Apply</button></div>
+	<div id="popup2" class="popup"><div id="popup2h" class="popuph">Files</div><textarea id="files" readonly placeholder="No Files..."></textarea></div>
+	<div id="popup3" class="popup"><div id="popup3h" class="popuph">Other Options (WIP)</div></div>
 	<button onclick="LoadButton();">Load</button>
 	<button onclick="SaveButton();">Save</button>
 	<button onclick="download();">Download</button>
