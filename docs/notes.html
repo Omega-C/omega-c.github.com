@@ -12,7 +12,7 @@
 		outline: 0px solid transparent;
 	}
 	
-	#popup, #popup2 {
+	#popup, #popup2, #popup3 {
 		position:absolute;
 		width: 30%;
 		height: 40%;
@@ -28,14 +28,14 @@
 		z-index: 10;
 		resize: none;
 		width:98%;
-		height:83%;
+		height:78%;
 		margin:1%;
 	}
 	#popup2>textarea {
 		z-index: 10;
 		resize: none;
 		width:98%;
-		height:97%;
+		height:92%;
 		margin:1%;
 	}
 	#popup>button {
@@ -70,7 +70,7 @@
 		float: left;
 		margin: 1px;
 		padding: 0px;
-		width: calc(20% - 2px);
+		width: calc(33.33% - 2px);
 		height: 5%;
 		display: inline-block;
 		outline: none;
@@ -91,20 +91,20 @@
 	</style>
 </head>
 
-<body><pre id="main" spellcheck=false contenteditable></pre>
-	<div id="popup"><textarea id="replacements" placeholder="JSON for replacements">{"-->":"→","/\\":"∧","\\/":"∨","~!":"¬","<→":"↔","==>":"⇒","--U":"⊃","<⇒":"⇔","=={⇔}":"≡","=={↔}":"≡","D{set}":"𝔻"}</textarea><button onclick="saveParameters();">Apply</button></div>
-	<div id="popup2"><textarea id="files" readonly placeholder="No Files..."></textarea></div>
+<body><pre id="main" spellcheck=true contenteditable></pre>
+	<div id="popup">Replacements<textarea id="replacements" placeholder="JSON for replacements">{"-->":"→","/\\":"∧","\\/":"∨","~!":"¬","<→":"↔","==>":"⇒","--U":"⊃","<⇒":"⇔","=={⇔}":"≡","=={↔}":"≡","D{set}":"𝔻"}</textarea><button onclick="saveParameters();">Apply</button></div>
+	<div id="popup2">Files<textarea id="files" readonly placeholder="No Files..."></textarea></div>
+	<div id="popup3">Other Options (WIP)</div>
 	<button onclick="LoadButton();">Load</button>
 	<button onclick="SaveButton();">Save</button>
 	<button onclick="download();">Download</button>
-	<button onclick="toggle('popup','block')">Replacements</button>
-	<button onclick="toggle('popup2','block')">List Notes</button>
 
 	<script>
 	/*yoink, from https://www.w3schools.com/howto/howto_js_draggable.asp*/
 	
 	dragElement(document.getElementById("popup"));
 	dragElement(document.getElementById("popup2"));
+	dragElement(document.getElementById("popup3"));
 	function dragElement(elmnt) {
 	  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 	  if (document.getElementById(elmnt.id + "header")) {
@@ -229,6 +229,7 @@
 		saveKeep();
 		return(false)
 	});
+	
 	document.getElementById("main").addEventListener("keydown", function replaceTab(event, element = document.activeElement) {
 		if(event.key === "Tab") {
 			event.preventDefault();
@@ -239,6 +240,14 @@
 			let node = document.createTextNode(tab);
 			range.insertNode(node);
 			selection.modify("move", "right", "character")
+		}
+	});
+	
+	document.getElementById("main").addEventListener("keyup", function replaceTab(event) {
+		if (e.ctrlKey && e.which==81) {
+			toggle("popup","block");
+			toggle("popup2","block");
+			toggle("popup3","block")
 		}
 	});
 
