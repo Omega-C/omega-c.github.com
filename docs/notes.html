@@ -252,14 +252,18 @@
 			let selection = window.getSelection();
 			let range = selection.getRangeAt(0);
 			range.deleteContents();
-			let tab = "	";
-			let node = document.createTextNode(tab);
+			let node = document.createTextNode("	");
 			range.insertNode(node);
 			selection.modify("move", "right", "character")
 		};
 		if (event.key === "Enter") {
 			event.preventDefault();
-			document.execCommand("insertHTML",false,"<br/><br/>");
+			let selection = window.getSelection();
+			let range = selection.getRangeAt(0);
+			range.deleteContents();
+			let node = document.createElement("br");
+			range.insertNode(node);
+			selection.modify("move", "right", "character")
 		}
 	});
 	
