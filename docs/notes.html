@@ -95,7 +95,7 @@
 </head>
 
 <body><pre id="main" spellcheck=false contenteditable></pre>
-	<div id="popup2" class="popup"><div id="popup2header">Files</div><textarea id="files" readonly placeholder="No Files..."></textarea></div>
+	<div id="popup2" class="popup"><div id="popup2header">Notes</div><textarea id="files" readonly placeholder="No Files..."></textarea></div>
 	<div id="popup3" class="popup"><div id="popup3header">Other Options (WIP)</div><button onclick="toggleSpellcheck();">Toggle SpellCheck</button></div>
 	<div id="popup" class="popup"><div id="popupheader">Replacements</div><textarea id="replacements" placeholder="JSON for replacements">{"-->":"→","/\\":"∧","\\/":"∨","~!":"¬","<→":"↔","==>":"⇒","--U":"⊃","<⇒":"⇔","=={⇔}":"≡","=={↔}":"≡","D{set}":"𝔻"}</textarea><button onclick="saveParameters();">Apply</button></div>
 	<button onclick="LoadButton();">Load</button>
@@ -228,7 +228,8 @@
 			alert(`${fname} not found in saves`)
 		} else {
 			document.getElementById("main").innerHTML = files[fname]
-		}
+		};
+		saveKeep()
 	};
 
 	function download() {
