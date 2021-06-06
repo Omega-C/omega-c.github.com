@@ -141,6 +141,25 @@
 
 	/*now my code*/
 	
+	if(localStorage.getItem("savednotes") != null) {
+		document.getElementById("main").innerHTML = localStorage.getItem("savednotes")
+	};
+		
+	if(localStorage.getItem("rewrites") != null) {
+		rewritePresets = localStorage.getItem("rewrites")
+	} else {
+		rewritePresets = ""
+	};
+		
+	try {
+		if(JSON.parse(localStorage.getItem("saves")) === null) {
+			localStorage.setItem("saves", JSON.stringify({}))
+		}
+	} catch(e) {
+		console.log("rewriting data I think.");
+		localStorage.setItem("saves", JSON.stringify({}))
+	};
+		
 	function toggleSpellcheck() {
 		if (document.getElementById("main").getAttribute("spellcheck")=="true") {
 			document.getElementById("main").setAttribute("spellcheck", "false")
@@ -177,25 +196,6 @@
 			};
 			saveKeep()
 		} catch(e) {alert("could not parse JSON");alert(e)}
-	};
-		
-	if(localStorage.getItem("savednotes") != null) {
-		document.getElementById("main").innerHTML = localStorage.getItem("savednotes")
-	};
-		
-	if(localStorage.getItem("rewrites") != null) {
-		rewritePresets = localStorage.getItem("rewrites")
-	} else {
-		rewritePresets = ""
-	};
-		
-	try {
-		if(JSON.parse(localStorage.getItem("saves")) === null) {
-			localStorage.setItem("saves", JSON.stringify({}))
-		}
-	} catch(e) {
-		console.log("rewriting data I think.");
-		localStorage.setItem("saves", JSON.stringify({}))
 	};
 		
 	document.getElementById("main").addEventListener("paste", function(e) {
