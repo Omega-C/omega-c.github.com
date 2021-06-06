@@ -42,7 +42,7 @@
 		height:92%;
 		margin:1%;
 	}
-	#popup>button {
+	#popup>button, #popup3>button {
 		width:98%;
 		height:10%;
 		margin:1%;
@@ -94,9 +94,9 @@
 	</style>
 </head>
 
-<body><pre id="main" spellcheck=true contenteditable></pre>
+<body><pre id="main" spellcheck=false contenteditable></pre>
 	<div id="popup2" class="popup"><div id="popup2header">Files</div><textarea id="files" readonly placeholder="No Files..."></textarea></div>
-	<div id="popup3" class="popup"><div id="popup3header">Other Options (WIP)</div></div>
+	<div id="popup3" class="popup"><div id="popup3header">Other Options (WIP)</div><button onclick="toggleSpellcheck();">Toggle SpellCheck</button></div>
 	<div id="popup" class="popup"><div id="popupheader">Replacements</div><textarea id="replacements" placeholder="JSON for replacements">{"-->":"→","/\\":"∧","\\/":"∨","~!":"¬","<→":"↔","==>":"⇒","--U":"⊃","<⇒":"⇔","=={⇔}":"≡","=={↔}":"≡","D{set}":"𝔻"}</textarea><button onclick="saveParameters();">Apply</button></div>
 	<button onclick="LoadButton();">Load</button>
 	<button onclick="SaveButton();">Save</button>
@@ -140,6 +140,14 @@
 	};
 
 	/*now my code*/
+	
+	function toggleSpellcheck() {
+		if (document.getElementById("main").getAttribute("spellcheck")=="true") {
+			document.getElementById("main").setAttribute("spellcheck", "false")
+		} else {
+			document.getElementById("main").setAttribute("spellcheck", "true")
+		}
+	};
 	
 	toggle("popup","block");
 	toggle("popup2","block");
