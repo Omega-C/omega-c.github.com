@@ -263,7 +263,8 @@
 			range.deleteContents();
 			let node = document.createElement("br");
 			range.insertNode(node);
-			selection.modify("move", "right", "character")
+			//selection.modify("move", "right", "character");
+			selection.collapseToEnd()
 		}
 	});
 	
