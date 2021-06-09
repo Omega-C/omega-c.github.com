@@ -261,17 +261,29 @@
 			let selection = window.getSelection();
 			let range = selection.getRangeAt(0);
 			range.deleteContents();
-			range.insertNode(document.createElement("br"));
-			selection.collapseToEnd();
-			try {
-				if (document.getElementById("main").childNodes[document.getElementById("main").childNodes.length-2].tagName!="BR") {
-					range.insertNode(document.createElement("br"));
-					selection.collapseToEnd()
-				}
-			} catch(e) {
+			if (document.getElementById("main").childNodes.length<2) {
 				range.insertNode(document.createElement("br"));
-				selection.collapseToEnd()
+				selection.collapseToEnd();
 			}
+			else {
+				for (let item of Array.prototype.slice.call(document.getElementById("main").childNodes).slice().reverse()) {
+					if (item.nodeValue=="") {
+						console.log("a",item)
+						continue
+					};
+					if (item.tagName=="BR") {
+						break
+					};
+					if (item.tagName!="BR") {
+						console.log("b",item)
+						range.insertNode(document.createElement("br"));
+						selection.collapseToEnd();
+						break
+					}
+				}
+			};
+			range.insertNode(document.createElement("br"));
+			selection.collapseToEnd()
 		}
 	});
 	
