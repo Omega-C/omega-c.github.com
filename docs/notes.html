@@ -261,8 +261,10 @@
 			let selection = window.getSelection();
 			let range = selection.getRangeAt(0);
 			range.deleteContents();
-			let node = document.createElement("br");
-			range.insertNode(node);
+			range.insertNode(document.createElement("br"));
+			if (document.getElementById("main").lastElementChild.tagName!="BR") {
+				range.insertNode(document.createElement("br"));
+			}
 			//selection.modify("move", "right", "character");
 			selection.collapseToEnd()
 		}
