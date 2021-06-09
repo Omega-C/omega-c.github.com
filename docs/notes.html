@@ -262,12 +262,16 @@
 			let range = selection.getRangeAt(0);
 			range.deleteContents();
 			range.insertNode(document.createElement("br"));
-			selection.collapseToEnd()
-			if (document.getElementById("main").lastElementChild.tagName!="BR") {
+			selection.collapseToEnd();
+			try {
+				if (document.getElementById("main").childNodes[document.getElementById("main").childNodes.length-2].tagName!="BR") {
+					range.insertNode(document.createElement("br"));
+					selection.collapseToEnd()
+				}
+			} catch(e) {
 				range.insertNode(document.createElement("br"));
+				selection.collapseToEnd()
 			}
-			//selection.modify("move", "right", "character");
-			selection.collapseToEnd()
 		}
 	});
 	
