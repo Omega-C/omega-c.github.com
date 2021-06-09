@@ -268,14 +268,12 @@
 			else {
 				for (let item of Array.prototype.slice.call(document.getElementById("main").childNodes).slice().reverse()) {
 					if (item.nodeValue=="") {
-						console.log("a",item)
 						continue
 					};
 					if (item.tagName=="BR") {
 						break
 					};
 					if (item.tagName!="BR") {
-						console.log("b",item)
 						range.insertNode(document.createElement("br"));
 						selection.collapseToEnd();
 						break
