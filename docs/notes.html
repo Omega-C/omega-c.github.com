@@ -4,7 +4,7 @@
 
 <head>
 	<title>Notes</title>
-	<!--This is just a rip off of the console thing I did, but I want something I can jot notes down on nonetheless. Progress will be had later on with replacements and all that jazz.-->
+	<!--This is just a rip off of the console thing I did, but I want something I can jot notes down on nonetheless. Progress will be had later on with replacements and all that jazz. This is made to be "fileable" if needed meaning there are no external references-->
 	<style>
 	* {
 		margin: 0;
@@ -234,11 +234,13 @@
 
 	function download() {
 		let a=document.createElement("a");
-		a.href=`data:text/html;charset=utf-8,${encodeURIComponent(document.getElementById("main").innerHTML.replace(/<br\s*\/?>/mg,"\n"))}`;
+		let temp=document.createElement("div");
+		temp.innerHTML=document.getElementById("main").innerHTML.replace(/<br\s*\/?>/mg,"\n");
+		a.href=`data:text/html;charset=utf-8,${encodeURIComponent(temp.textContent)}`;
 		a.download=prompt("Name of Note: ")+".txt";
 		document.body.appendChild(a);
 		a.click();
-		document.body.removeChild(a);
+		document.body.removeChild(a)
 	};
 	
 	document.getElementById("main").addEventListener("input", function(e) {
