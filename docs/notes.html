@@ -12,7 +12,7 @@
 	<meta property="og:description" content="An online notebook with symbol replacement and local file storage built in. Press Ctrl+Q to toggle pannels."/>
 	<meta name="theme-color" content="#ebe7df"/>
 	<meta name="twitter:card" content="summary_large_image"/>
-	<!--This is just a rip off of the console thing I did, but I want something I can jot notes down on nonetheless. Progress will be had later on with replacements and all that jazz. This is made to be "fileable" if needed meaning there are no external references-->
+	<!--This is just a rip off of the console thing I did, but I want something I can jot notes down on nonetheless. Progress will be had later on with replacements and all that jazz. This is made to be "fileable" if needed meaning there are no external references and so it works without internet if saved locally. Trans rights.-->
 	<style>
 	* {
 		margin: 0;
@@ -33,7 +33,7 @@
 		overflow: hidden;
 	}
 	
-	#popupheader, #popup2header, #popup3header {
+	#popupheader, #popup2header, #popup3header #popup4header {
 		cursor: move;
 		z-index: 10 !important;
 	}
@@ -104,6 +104,7 @@
 
 <body><pre id="main" spellcheck=false contenteditable></pre>
 	<div id="popup2" class="popup"><div id="popup2header">Notes</div><textarea id="files" readonly placeholder="No Files..."></textarea></div>
+	<div id="popup4" class="popup"><div id="popup4header">Usage</div>This is a file application done using only html meaning you can save the code for the page and have it anywhere. Press "Ctrl+." to apply replacements.<br\><br\>Creator: Omega-C on github, Imagine Existance on youtube.</div>
 	<div id="popup3" class="popup"><div id="popup3header">Other Options (WIP)</div><button onclick="toggleSpellcheck();">Toggle SpellCheck</button></div>
 	<div id="popup" class="popup"><div id="popupheader">Replacements</div><textarea id="replacements" placeholder="JSON for replacements">{"\"{<}":"⌜","\"{>}":"⌝","-->":"→","/\\":"∧","\\/":"∨","~!":"¬","<→":"↔","==>":"⇒","U{^}":"∪","U{v}":"∩","U{>}":"⊂","U{<}":"⊃","⊂{_}":"⊆","⊃{_}":"⊇","<⇒":"⇔","=={⇔}":"≡","=={↔}":"≡","e{el}":"∈","{ns}":"Ø","B{BB}":"𝔹","D{BB}":"𝔻","...{T}":"∴","...{B}":"∵","...{S}":"∵","A{S}":"∀","E{S}":"∃","T{-}":"⊢","T{=}":"⊨","T{^}":"⊤","T{v}":"⊥","[]{P}":"◊","[]{N}":"◻","<--":"←","<==":"⇐","C{cmp}":"∁"}</textarea><button onclick="saveParameters();">Apply</button></div>
 	<button onclick="LoadButton();">Load</button>
@@ -116,6 +117,7 @@
 	dragElement(document.getElementById("popup"));
 	dragElement(document.getElementById("popup2"));
 	dragElement(document.getElementById("popup3"));
+	dragElement(document.getElementById("popup4"));
 	function dragElement(elmnt) {
 	  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 	  if (document.getElementById(elmnt.id + "header")) {
