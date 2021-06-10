@@ -234,7 +234,7 @@
 
 	function download() {
 		let a=document.createElement("a");
-		a.href=`data:text/html;charset=utf-8,${encodeURIComponent(document.getElementById("main").textContent)}`;
+		a.href=`data:text/html;charset=utf-8,${encodeURIComponent(document.getElementById("main").innerHTML.replace(/<br\s*\/?>/mg,"\n"))}`;
 		a.download=prompt("Name of Note: ")+".txt";
 		document.body.appendChild(a);
 		a.click();
