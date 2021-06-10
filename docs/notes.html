@@ -103,10 +103,10 @@
 </head>
 
 <body><pre id="main" spellcheck=false contenteditable></pre>
-	<div id="popup2" class="popup"><div id="popup2header">Notes</div><textarea id="files" readonly placeholder="No Files..."></textarea></div>
-	<div id="popup4" class="popup"><div id="popup4header">Usage</div>This is a file application done using only html meaning you can save the code for the page and have it anywhere. Press "Ctrl+." to apply replacements.<br\><br\>Creator: Omega-C on github, Imagine Existance on youtube.</div>
-	<div id="popup3" class="popup"><div id="popup3header">Other Options (WIP)</div><button onclick="toggleSpellcheck();">Toggle SpellCheck</button></div>
-	<div id="popup" class="popup"><div id="popupheader">Replacements</div><textarea id="replacements" placeholder="JSON for replacements">{"\"{<}":"⌜","\"{>}":"⌝","-->":"→","/\\":"∧","\\/":"∨","~!":"¬","<→":"↔","==>":"⇒","U{^}":"∪","U{v}":"∩","U{>}":"⊂","U{<}":"⊃","⊂{_}":"⊆","⊃{_}":"⊇","<⇒":"⇔","=={⇔}":"≡","=={↔}":"≡","e{el}":"∈","{ns}":"Ø","B{BB}":"𝔹","D{BB}":"𝔻","...{T}":"∴","...{B}":"∵","...{S}":"∵","A{S}":"∀","E{S}":"∃","T{-}":"⊢","T{=}":"⊨","T{^}":"⊤","T{v}":"⊥","[]{P}":"◊","[]{N}":"◻","<--":"←","<==":"⇐","C{cmp}":"∁"}</textarea><button onclick="saveParameters();">Apply</button></div>
+	<div id="popup2" class="popup"><div id="popup2header" unselectable="on">Notes</div><textarea id="files" readonly placeholder="No Files..."></textarea></div>
+	<div id="popup4" class="popup"><div id="popup4header" unselectable="on">Usage</div>This is a file application done using only html meaning you can save the code for the page and have it anywhere. Press "Ctrl+." to apply replacements.<br\><br\>Creator: Omega-C on github, Imagine Existance on youtube.</div>
+	<div id="popup3" class="popup"><div id="popup3header" unselectable="on">Other Options (WIP)</div><button onclick="toggleSpellcheck();">Toggle SpellCheck</button></div>
+	<div id="popup" class="popup"><div id="popupheader" unselectable="on">Replacements</div><textarea id="replacements" placeholder="JSON for replacements">{"\"{<}":"⌜","\"{>}":"⌝","-->":"→","/\\":"∧","\\/":"∨","~!":"¬","<→":"↔","==>":"⇒","U{^}":"∪","U{v}":"∩","U{>}":"⊂","U{<}":"⊃","⊂{_}":"⊆","⊃{_}":"⊇","<⇒":"⇔","=={⇔}":"≡","=={↔}":"≡","e{el}":"∈","{ns}":"Ø","B{BB}":"𝔹","D{BB}":"𝔻","...{T}":"∴","...{B}":"∵","...{S}":"∵","A{S}":"∀","E{S}":"∃","T{-}":"⊢","T{=}":"⊨","T{^}":"⊤","T{v}":"⊥","[]{P}":"◊","[]{N}":"◻","<--":"←","<==":"⇐","C{cmp}":"∁"}</textarea><button onclick="saveParameters();">Apply</button></div>
 	<button onclick="LoadButton();">Load</button>
 	<button onclick="SaveButton();">Save</button>
 	<button onclick="download();">Download</button>
@@ -181,6 +181,7 @@
 	toggle("popup","block");
 	toggle("popup2","block");
 	toggle("popup3","block");
+	toggle("popup4","block");
 	
 	function saveKeep() {
 		localStorage.setItem("savednotes", document.getElementById("main").innerHTML)
@@ -301,7 +302,8 @@
 		if (event.ctrlKey && event.which==81) {
 			toggle("popup","block");
 			toggle("popup2","block");
-			toggle("popup3","block")
+			toggle("popup3","block");
+			toggle("popup4","block")
 		};
 		if (event.ctrlKey && event.which==190) {
 			saveParameters()
