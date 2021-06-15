@@ -31,7 +31,7 @@
 		overflow: hidden;
 	}
 	
-	#popup1header, #popup2header, #popup3header, #popup4header {
+	#popup1header, #popup2header, #popup3header, #popup4header, #popup5header {
 		cursor: move;
 		z-index: 10 !important;
 	}
@@ -60,7 +60,7 @@
 		font-size: 14px;
 		background-color: #FFFFFF;
 		color: black;
-		height: calc(95% - 11px);
+		height: 100%;
 		width: calc(100% - 10px);
 		padding: 5px;
 		display: inline-block;
@@ -105,9 +105,7 @@
 	<div id="popup4" class="popup"><div id="popup4header" unselectable="on">Usage</div>This is a file application done using only html meaning you can save the code for the page and have it anywhere. Press "Ctrl+." to apply replacements (and remove deleted formatting) including a mardown-esque format. Creator: Omega-C on github, Imagine Existance on youtube.</div>
 	<div id="popup3" class="popup"><div id="popup3header" unselectable="on">Other Options (WIP)</div><button onclick="toggleSpellcheck();">Toggle SpellCheck</button><button onclick="downloadHTML();">Download as HTML</button><button onclick="console.log(propupload('.html'));">Upload HTML</button><button onclick="toggleSpellcheck();">Export All Files</button><button onclick="toggleSpellcheck();">Import All Files</button><button onclick="toggleSpellcheck();">Mix All Files</button></div>
 	<div id="popup1" class="popup"><div id="popup1header" unselectable="on">Replacements</div><textarea id="replacements" placeholder="JSON for replacements" spellcheck=false></textarea><button onclick="saveParameters();">Apply</button></div>
-	<button onclick="LoadButton();">Load</button>
-	<button onclick="SaveButton();">Save</button>
-	<button onclick="download();">Download</button>
+	<div id="popup5" class="popup"><div id="popup5header" unselectable="on">Options</div><button onclick="LoadButton();">Load</button><button onclick="SaveButton();">Save</button><button onclick="download();">Download as Text</button></div>
 
 	<script>
 		/*fuck it, I'm goin all in with classes and that jazz. Conversions and importations of files.*/
@@ -145,7 +143,7 @@
 
 		/*globals*/
 
-		const popupIDs=["popup1","popup2","popup3","popup4"];
+		const popupIDs=["popup1","popup2","popup3","popup4","popup5"];
 		
 
 		/*functions*/
