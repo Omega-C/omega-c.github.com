@@ -4,11 +4,9 @@
 
 <head>
 	<title>Notes</title>
-	<!--link rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABlBMVEVPEoH///8UEjLYAAAAAWJLR0QB/wIt3gAAAAd0SU1FB+UEFgIgEIEYbroAAAAMSURBVAjXY2AgDQAAADAAAceqhY4AAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMDQtMjJUMDI6MzI6MTYrMDA6MDDzcYynAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIxLTA0LTIyVDAyOjMyOjE2KzAwOjAwgiw0GwAAAABJRU5ErkJggg==" type="image/png"-->
 	<meta property="og:title" content="Quick Replace Notepad"/>
 	<meta property="og:type" content="website"/>
 	<meta property="og:url" content="/"/>
-	<!--meta property="og:image" content="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVR42mP0EC/9z0AEYBxVSF+FAOK9EkmXFlqCAAAAAElFTkSuQmCC"/-->
 	<meta property="og:description" content="An online notebook with symbol replacement and local file storage built in. Press Ctrl+Q to toggle pannels."/>
 	<meta name="theme-color" content="#ebe7df"/>
 	<meta name="twitter:card" content="summary_large_image"/>
@@ -33,12 +31,12 @@
 		overflow: hidden;
 	}
 	
-	#popupheader, #popup2header, #popup3header, #popup4header {
+	#popup1header, #popup2header, #popup3header, #popup4header {
 		cursor: move;
 		z-index: 10 !important;
 	}
 	
-	#popup>textarea{
+	#popup1>textarea{
 		resize: none;
 		width:98%;
 		height:78%;
@@ -50,7 +48,7 @@
 		height:92%;
 		margin:1%;
 	}
-	#popup>button, #popup3>button {
+	.popup>button {
 		width:98%;
 		height:10%;
 		margin:1%;
@@ -104,223 +102,211 @@
 
 <body><pre id="main" spellcheck=false contenteditable></pre>
 	<div id="popup2" class="popup"><div id="popup2header" unselectable="on">Notes</div><textarea id="files" readonly placeholder="No Files..."></textarea></div>
-	<div id="popup4" class="popup"><div id="popup4header" unselectable="on">Usage</div>This is a file application done using only html meaning you can save the code for the page and have it anywhere. Press "Ctrl+." to apply replacements.<br\><br\>Creator: Omega-C on github, Imagine Existance on youtube.</div>
-	<div id="popup3" class="popup"><div id="popup3header" unselectable="on">Other Options (WIP)</div><button onclick="toggleSpellcheck();">Toggle SpellCheck</button></div>
-	<div id="popup" class="popup"><div id="popupheader" unselectable="on">Replacements</div><textarea id="replacements" placeholder="JSON for replacements" spellcheck=false></textarea><button onclick="saveParameters();">Apply</button></div>
+	<div id="popup4" class="popup"><div id="popup4header" unselectable="on">Usage</div>This is a file application done using only html meaning you can save the code for the page and have it anywhere. Press "Ctrl+." to apply replacements (and remove deleted formatting) including a mardown-esque format. Creator: Omega-C on github, Imagine Existance on youtube.</div>
+	<div id="popup3" class="popup"><div id="popup3header" unselectable="on">Other Options (WIP)</div><button onclick="toggleSpellcheck();">Toggle SpellCheck</button><button onclick="downloadHTML();">Download as HTML</button><button onclick="console.log(propupload('.html'));">Upload HTML</button><button onclick="toggleSpellcheck();">Export All Files</button><button onclick="toggleSpellcheck();">Import All Files</button><button onclick="toggleSpellcheck();">Mix All Files</button></div>
+	<div id="popup1" class="popup"><div id="popup1header" unselectable="on">Replacements</div><textarea id="replacements" placeholder="JSON for replacements" spellcheck=false></textarea><button onclick="saveParameters();">Apply</button></div>
 	<button onclick="LoadButton();">Load</button>
 	<button onclick="SaveButton();">Save</button>
 	<button onclick="download();">Download</button>
 
 	<script>
-	/*yoink, from https://www.w3schools.com/howto/howto_js_draggable.asp*/
-	
-	dragElement(document.getElementById("popup"));
-	dragElement(document.getElementById("popup2"));
-	dragElement(document.getElementById("popup3"));
-	dragElement(document.getElementById("popup4"));
-	function dragElement(elmnt) {
-	  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-	  if (document.getElementById(elmnt.id + "header")) {
-	    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown
-	  } else {
-	    elmnt.onmousedown = dragMouseDown
-	  };
-	  function dragMouseDown(e) {
-	    e = e || window.event;
-	    e.preventDefault();
-	    pos3 = e.clientX;
-	    pos4 = e.clientY;
-	    document.onmouseup = closeDragElement;
-	    document.onmousemove = elementDrag
-	  };
-	  function elementDrag(e) {
-	    e = e || window.event;
-	    e.preventDefault();
-	    pos1 = pos3 - e.clientX;
-	    pos2 = pos4 - e.clientY;
-	    pos3 = e.clientX;
-	    pos4 = e.clientY;
-	    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-	    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px"
-	  };
-	  function closeDragElement() {
-	    document.onmouseup = null;
-	    document.onmousemove = null
-	  }
-	};
+		/*fuck it, I'm goin all in with classes and that jazz. Conversions and importations of files.*/
+		/*yoink, from https://www.w3schools.com/howto/howto_js_draggable.asp*/
+		function dragElement(elmnt) {
+		  var pos1=0,pos2=0,pos3=0,pos4=0;
+		  if (document.getElementById(elmnt.id+"header")) {
+		    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown
+		  } else {
+		    elmnt.onmousedown = dragMouseDown
+		  };
+		  function dragMouseDown(e) {
+		    e = e || window.event;
+		    e.preventDefault();
+		    pos3 = e.clientX;
+		    pos4 = e.clientY;
+		    document.onmouseup = closeDragElement;
+		    document.onmousemove = elementDrag
+		  };
+		  function elementDrag(e) {
+		    e = e || window.event;
+		    e.preventDefault();
+		    pos1 = pos3 - e.clientX;
+		    pos2 = pos4 - e.clientY;
+		    pos3 = e.clientX;
+		    pos4 = e.clientY;
+		    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+		    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px"
+		  };
+		  function closeDragElement() {
+		    document.onmouseup = null;
+		    document.onmousemove = null
+		  }
+		};
 
-	/*now my code*/
-	
-	document.getElementById("replacements").textContent=`{"\\[\\+\\+\\]{(.*)}":"<span style=\\\"font-size:larger;\\\">$1</span>","\\[--\\]{(.*)}":"<span style=\\\"font-size:smaller;\\\">$1</span>","\\[style=\\\"(.*)\\\"\\]{(.*)}":"<span style=\\\"$1\\\">$2</span>","\\[(.*)\\]\\[(.*)\\]{(.*)}":"<$1 $2>$3</$1>","-{3,}":"<br/><hr/>","\`(.*?)\`":"<code>$1</code>","\\*\\*\\*(.*?)\\*\\*\\*":"<strong><em>$1</em></strong>","\\*\\*(.*?)\\*\\*":"<strong>$1</strong>","\\*(.*?)\\*":"<em>$1</em>","_{(.*?)}":"<sub>$1</sub>","\\^{(.*?)}":"<sup>$1</sup>","\\\"{&lt;}":"⌜","\\\"{&gt;}":"⌝","--&gt;":"→","/\\\\":"∧","\\\\\\/":"∨","~!":"¬","&lt;→":"↔","==&gt;":"⇒","U{\\^}":"∪","U{v}":"∩","U{&gt;}":"⊂","U{&lt;}":"⊃","⊂{_}":"⊆","⊃{_}":"⊇","&lt;⇒":"⇔","=={⇔}":"≡","=={↔}":"≡","e{el}":"∈","{ns}":"Ø","B{BB}":"𝔹","D{BB}":"𝔻","\\.\\.\\.{T}":"∴","\\.\\.\\.{B}":"∵","\\.\\.\\.{S}":"∵","A{S}":"∀","E{S}":"∃","T{-}":"⊢","T{=}":"⊨","T{\\^}":"⊤","T{v}":"⊥","\\[\\]{P}":"◊","\\[\\]{N}":"◻","&lt;--":"←","&lt;==":"⇐","C{cmp}":"∁"}`.replaceAll(/\\([^"\\])/g,"\\\\$1");
-	
-	if(localStorage.getItem("savednotes") != null) {
-		document.getElementById("main").innerHTML = localStorage.getItem("savednotes")
-	};
+		/*globals*/
+
+		const popupIDs=["popup1","popup2","popup3","popup4"];
 		
-	if(localStorage.getItem("rewrites") != null) {
-		rewritePresets = localStorage.getItem("rewrites")
-	} else {
-		rewritePresets = ""
-	};
-		
-	try {
-		if(JSON.parse(localStorage.getItem("saves")) === null) {
-			localStorage.setItem("saves", JSON.stringify({}))
-		}
-	} catch(e) {
-		console.log("rewriting data I think.");
-		localStorage.setItem("saves", JSON.stringify({}))
-	};	
-	
-	function toggleSpellcheck() {
-		if (document.getElementById("main").getAttribute("spellcheck")=="true") {
-			document.getElementById("main").setAttribute("spellcheck", "false")
-		} else {
-			document.getElementById("main").setAttribute("spellcheck", "true")
-		}
-	};
-	
-	toggle("popup","block");
-	toggle("popup2","block");
-	toggle("popup3","block");
-	toggle("popup4","block");
-	
-	function saveKeep() {
-		localStorage.setItem("savednotes", document.getElementById("main").innerHTML)
-	};
-	
-	function listFiles() {
-		let text=Object.keys(JSON.parse(localStorage.getItem("saves"))).join(", ");
-		document.getElementById("files").value=text
-	};
-	
-	listFiles();
-		
-	function saveParameters() {
-		try {
-			let replacementParameters=JSON.parse(document.getElementById("replacements").value);
-			document.getElementById("main").normalize();
-			for (const a in replacementParameters) {
-				try {
-					document.getElementById("main").innerHTML=document.getElementById("main").innerHTML.replaceAll(RegExp(a,"g"),replacementParameters[a]);
-				} catch(e) {
-					document.getElementById("main").innerHTML=document.getElementById("main").innerHTML.replaceAll(a,replacementParameters[a]);
-				}
+
+		/*functions*/
+
+		function toggle(elementID,disp) {
+			if (document.getElementById(elementID).style.display=="none") {document.getElementById(elementID).style.display=disp}
+			else {document.getElementById(elementID).style.display="none"}
+		};
+		function toggleAllPopups() {
+			for (let b of popupIDs) {
+				toggle(b,"block");
+			}
+		};
+		function toggleSpellcheck() {
+			if (document.getElementById("main").getAttribute("spellcheck")=="true") {
+				document.getElementById("main").setAttribute("spellcheck", "false")
+			} else {
+				document.getElementById("main").setAttribute("spellcheck", "true")
+			}
+		};
+
+		function saveKeep() {
+			localStorage.setItem("savednotes", document.getElementById("main").innerHTML)
+		};
+		function listFiles() {
+			let text=Object.keys(JSON.parse(localStorage.getItem("saves"))).join(", ");
+			document.getElementById("files").value=text
+		};
+
+		function saveParameters() {
+			try {
+				let replacementParameters=JSON.parse(document.getElementById("replacements").value);
+				document.getElementById("main").normalize();
+				for (const a in replacementParameters) {
+					try {
+						document.getElementById("main").innerHTML=document.getElementById("main").innerHTML.replaceAll(RegExp(a,"g"),replacementParameters[a]);
+					} catch(e) {
+						document.getElementById("main").innerHTML=document.getElementById("main").innerHTML.replaceAll(a,replacementParameters[a]);
+					}
+				};
+				saveKeep()
+			} catch(e) {alert("could not parse JSON");alert(e)}
+		};
+
+		function SaveButton() {
+			let fname = prompt("file name");
+			if(fname == "" || fname == null){return(false)};
+			let files = JSON.parse(localStorage.getItem("saves"));
+			files[fname] = document.getElementById("main").innerHTML;
+			localStorage.setItem("saves", JSON.stringify(files));
+			listFiles()
+		};
+		function LoadButton() {
+			let fname = prompt("file name");
+			if(fname == "" || fname == null) {
+				return(false)
+			};
+			let files = JSON.parse(localStorage.getItem("saves"));
+			if(!(fname in files)) {alert(`${fname} not found in saves`)
+			} else {
+				document.getElementById("main").innerHTML = files[fname]
 			};
 			saveKeep()
-		} catch(e) {alert("could not parse JSON");alert(e)}
-	};
+		};
+
+		function propdownload(data,name) {
+			let a=document.createElement("a");
+			a.href=data;
+			a.download=name;
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a)
+		};
+		function download() {
+			let temp=document.createElement("div");
+			temp.innerHTML=document.getElementById("main").innerHTML.replace(/<br\s*\/?>/mg,"\n");
+			propdownload(`data:text/html;charset=utf-8,${encodeURIComponent(temp.textContent)}`,prompt("Name of Note: ")+".txt")
+		};
+		function downloadHTML() {
+			propdownload(`data:text/html;charset=utf-8,${encodeURIComponent(document.getElementById("main").innerHTML)}`,prompt("Name of Note: ")+".html")
+		};
 		
-	document.getElementById("main").addEventListener("paste", function(e) {
-		e.preventDefault();
-		var text = (e.originalEvent || e).clipboardData.getData('text/plain');
-		var element = document.createElement("div");
-		element.innerText = text;
-		var text = element.innerHTML;
-		document.execCommand("insertHTML", false, text)
-	});
 
-	function SaveButton() {
-		let fname = prompt("file name");
-		if(fname == "" || fname == null) {
-			return(false)
-		};
-		let files = JSON.parse(localStorage.getItem("saves"));
-		files[fname] = document.getElementById("main").innerHTML;
-		localStorage.setItem("saves", JSON.stringify(files));
-		listFiles()
-	};
+		/*adding event listeners*/
 
-	function LoadButton() {
-		let fname = prompt("file name");
-		if(fname == "" || fname == null) {
-			return(false)
-		};
-		let files = JSON.parse(localStorage.getItem("saves"));
-		if(!(fname in files)) {
-			alert(`${fname} not found in saves`)
-		} else {
-			document.getElementById("main").innerHTML = files[fname]
-		};
-		saveKeep()
-	};
-
-	function download() {
-		let a=document.createElement("a");
-		let temp=document.createElement("div");
-		temp.innerHTML=document.getElementById("main").innerHTML.replace(/<br\s*\/?>/mg,"\n");
-		a.href=`data:text/html;charset=utf-8,${encodeURIComponent(temp.textContent)}`;
-		a.download=prompt("Name of Note: ")+".txt";
-		document.body.appendChild(a);
-		a.click();
-		document.body.removeChild(a)
-	};
-	
-	document.getElementById("main").addEventListener("input", function(e) {
-		saveKeep();
-		return(false)
-	});
-	
-	document.getElementById("main").addEventListener("keydown", function replaceTab(event, element = document.activeElement) {
-		if(event.key === "Tab") {
-			event.preventDefault();
-			let selection = window.getSelection();
-			let range = selection.getRangeAt(0);
-			range.deleteContents();
-			let node = document.createTextNode("	");
-			range.insertNode(node);
-			selection.modify("move", "right", "character")
-		};
-		if (event.key === "Enter") {
-			event.preventDefault();
-			let selection = window.getSelection();
-			let range = selection.getRangeAt(0);
-			range.deleteContents();
-			if (document.getElementById("main").childNodes.length<2) {
-				range.insertNode(document.createElement("br"));
-				selection.collapseToEnd();
-			}
-			else {
-				for (let item of Array.prototype.slice.call(document.getElementById("main").childNodes).slice().reverse()) {
-					if (item.nodeValue=="") {
-						continue
-					};
-					if (item.tagName=="BR") {
-						break
-					};
-					if (item.tagName!="BR") {
-						range.insertNode(document.createElement("br"));
-						selection.collapseToEnd();
-						break
-					}
-				}
+		document.getElementById("main").addEventListener("input",function(e){saveKeep();return(false)});
+		document.getElementById("main").addEventListener("paste", function(e) {
+			e.preventDefault();
+			var text = (e.originalEvent || e).clipboardData.getData('text/plain');
+			var element = document.createElement("div");
+			element.innerText = text;
+			var text = element.innerHTML;
+			document.execCommand("insertHTML", false, text)});
+		document.getElementById("main").addEventListener("keydown", function replaceTab(event,element=document.activeElement) {
+			if(event.key === "Tab") {
+				event.preventDefault();
+				let selection = window.getSelection();
+				let range = selection.getRangeAt(0);
+				range.deleteContents();
+				let node = document.createTextNode("	");
+				range.insertNode(node);
+				selection.modify("move", "right", "character")
 			};
-			range.insertNode(document.createElement("br"));
-			selection.collapseToEnd()
-		}
-	});
-	
-	document.addEventListener("keyup", function replaceTab(event) {
-		if (event.ctrlKey && event.which==81) {
-			toggle("popup","block");
-			toggle("popup2","block");
-			toggle("popup3","block");
-			toggle("popup4","block")
-		};
-		if (event.ctrlKey && event.which==190) {
-			saveParameters()
-		}
-	});
+			if (event.key === "Enter") {
+				event.preventDefault();
+				let selection = window.getSelection();
+				let range = selection.getRangeAt(0);
+				range.deleteContents();
+				if (document.getElementById("main").childNodes.length<2) {
+					range.insertNode(document.createElement("br"));
+					selection.collapseToEnd();
+				}
+				else {
+					for (let item of Array.prototype.slice.call(document.getElementById("main").childNodes).slice().reverse()) {
+						if (item.nodeValue=="") {
+							continue
+						};
+						if (item.tagName=="BR") {
+							break
+						};
+						if (item.tagName!="BR") {
+							range.insertNode(document.createElement("br"));
+							selection.collapseToEnd();
+							break
+						}
+					}
+				};
+				range.insertNode(document.createElement("br"));
+				selection.collapseToEnd()}
+			});
+		document.addEventListener("keyup", function replaceTab(event) {
+			if (event.ctrlKey && event.which==81){toggleAllPopups()};
+			if (event.ctrlKey && event.which==190){saveParameters()}});
 
-	function toggle(elementID,disp) {
-		if (document.getElementById(elementID).style.display=="none") {
-			document.getElementById(elementID).style.display=disp
+
+	function main() {
+		for (let popup of popupIDs) {
+			dragElement(document.getElementById(popup));
 		}
-		else {
-			document.getElementById(elementID).style.display="none"
+		toggleAllPopups();
+		document.getElementById("replacements").textContent=`{"\\[\\+\\+\\]{(.*?)}":"<span style=\\\"font-size:larger;\\\">$1</span>","\\[--\\]{(.*?)}":"<span style=\\\"font-size:smaller;\\\">$1</span>","\\[style=\\\"(.*?)\\\"\\]{(.*?)}":"<span style=\\\"$1\\\">$2</span>","\\[(.*?)\\]\\[(.*?)\\]{(.*?)}":"<$1 $2>$3</$1>","-{3,}":"<br/><hr/>","\`(.*?)\`":"<code>$1</code>","\\*\\*\\*(.*?)\\*\\*\\*":"<strong><em>$1</em></strong>","\\*\\*(.*?)\\*\\*":"<strong>$1</strong>","\\*(.*?)\\*":"<em>$1</em>","_{(.*?)}":"<sub>$1</sub>","\\^{(.*?)}":"<sup>$1</sup>","\\\"{&lt;}":"⌜","\\\"{&gt;}":"⌝","--&gt;":"→","/\\\\":"∧","\\\\\\/":"∨","~!":"¬","&lt;→":"↔","==&gt;":"⇒","U{\\^}":"∪","U{v}":"∩","U{&gt;}":"⊂","U{&lt;}":"⊃","⊂{_}":"⊆","⊃{_}":"⊇","&lt;⇒":"⇔","=={⇔}":"≡","=={↔}":"≡","e{el}":"∈","{ns}":"Ø","B{BB}":"𝔹","D{BB}":"𝔻","\\.\\.\\.{T}":"∴","\\.\\.\\.{B}":"∵","\\.\\.\\.{S}":"∵","A{S}":"∀","E{S}":"∃","T{-}":"⊢","T{=}":"⊨","T{\\^}":"⊤","T{v}":"⊥","\\[\\]{P}":"◊","\\[\\]{N}":"◻","&lt;--":"←","&lt;==":"⇐","C{cmp}":"∁"}`.replaceAll(/\\([^"\\])/g,"\\\\$1");
+		listFiles();
+		if(localStorage.getItem("savednotes") != null) {
+			document.getElementById("main").innerHTML = localStorage.getItem("savednotes")
+		};
+		if(localStorage.getItem("rewrites") != null) {
+			rewritePresets = localStorage.getItem("rewrites")
+		} else {
+			rewritePresets = ""
+		};		
+		try {
+			if(JSON.parse(localStorage.getItem("saves")) === null) {
+				localStorage.setItem("saves", JSON.stringify({}))
+			}
+		} catch(e) {
+			console.log("rewriting data I think.");
+			localStorage.setItem("saves", JSON.stringify({}))
 		}
-	}
+	};
+
+	main()
 	</script>
 </body>
-
 </html>
