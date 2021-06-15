@@ -34,6 +34,9 @@
 	#popup1header, #popup2header, #popup3header, #popup4header, #popup5header {
 		cursor: move;
 		z-index: 10 !important;
+		background-color: #9D9EA2;
+		text-align: center;
+		color: #FFFFFF;
 	}
 	
 	#popup1>textarea{
@@ -102,10 +105,10 @@
 
 <body><pre id="main" spellcheck=false contenteditable></pre>
 	<div id="popup2" class="popup"><div id="popup2header" unselectable="on">Notes</div><textarea id="files" readonly placeholder="No Files..."></textarea></div>
-	<div id="popup4" class="popup"><div id="popup4header" unselectable="on">Usage</div>This is a file application done using only html meaning you can save the code for the page and have it anywhere. Press "Ctrl+." to apply replacements (and remove deleted formatting) including a mardown-esque format. Creator: Omega-C on github, Imagine Existance on youtube.</div>
-	<div id="popup3" class="popup"><div id="popup3header" unselectable="on">Other Options (WIP)</div><button onclick="toggleSpellcheck();">Toggle SpellCheck</button><button onclick="downloadHTML();">Download as HTML</button><button onclick="console.log(propupload('.html'));">Upload HTML</button><button onclick="toggleSpellcheck();">Export All Files</button><button onclick="toggleSpellcheck();">Import All Files</button><button onclick="toggleSpellcheck();">Mix All Files</button></div>
 	<div id="popup1" class="popup"><div id="popup1header" unselectable="on">Replacements</div><textarea id="replacements" placeholder="JSON for replacements" spellcheck=false></textarea><button onclick="saveParameters();">Apply</button></div>
+	<div id="popup3" class="popup"><div id="popup3header" unselectable="on">Other Options (WIP)</div><button onclick="toggleSpellcheck();">Toggle SpellCheck</button><button onclick="downloadHTML();">Download as HTML</button><button onclick="uploadHTML();">Upload HTML</button><button onclick="toggleSpellcheck();">Export All Files</button><button onclick="toggleSpellcheck();">Import All Files</button><button onclick="toggleSpellcheck();">Mix All Files</button></div>
 	<div id="popup5" class="popup"><div id="popup5header" unselectable="on">Options</div><button onclick="LoadButton();">Load</button><button onclick="SaveButton();">Save</button><button onclick="download();">Download as Text</button></div>
+	<div id="popup4" class="popup"><div id="popup4header" unselectable="on">Usage</div>This is a file application done without any exterior sources meaning you can save the code for the page and have it anywhere. Press "Ctrl+." to apply replacements (and remove deleted formatting), replacements including a mardown-esque format. You can drag panes around by clicking and moving the headers for each. Creator: Omega-C on github, Imagine Existance on youtube.</div>
 
 	<script>
 		/*fuck it, I'm goin all in with classes and that jazz. Conversions and importations of files.*/
@@ -209,6 +212,24 @@
 			saveKeep()
 		};
 
+		function propupload(types,funct) {
+			let inputElement=document.createElement("input");
+			let fileReader=new FileReader();
+			fileReader.onload=function(event){funct(event.target.result)};
+			inputElement.type="file";
+			inputElement.accept=types;
+			inputElement.onchange=function(event){fileReader.readAsText(inputElement.files[0])};
+			document.body.appendChild(inputElement);
+			inputElement.click();
+			document.body.removeChild(inputElement)
+		};
+		function uploadHTML() {
+			propupload(".html",function(content){
+				document.getElementById("main").innerHTML=content;
+				saveKeep()
+			})
+		};
+		
 		function propdownload(data,name) {
 			let a=document.createElement("a");
 			a.href=data;
