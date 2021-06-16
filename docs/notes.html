@@ -8,34 +8,12 @@
 	<meta name="theme-color" content="#ebe7df"/>
 	<meta name="twitter:card" content="summary_large_image"/>
 	<!--This is just a rip off of the console thing I did, but I want something I can jot notes down on nonetheless. Progress will be had later on with replacements and all that jazz. This is made to be "fileable" if needed meaning there are no external references and so it works without internet if saved locally. Trans rights.-->
+	<style id="mainCSS"> .center * {display:block;margin-left:auto;margin-right:auto;} .center {text-align: center;} .resize>*, .resizewh>* {overflow:auto;resize:both;} .resizew>* {overflow:auto;resize:horizontal;} .resizeh>* {overflow:auto;resize:vertical;}</style>
 	<style>
 		* {
 			margin: 0;
 			padding: 0;
 			outline: 0px solid transparent;
-		}
-
-		.center * {
-			display:block;
-			margin-left:auto;
-			margin-right:auto;
-		}
-
-		.center {
-			text-align: center;
-		}
-
-		.resize>*, .resizewh>* {
-			overflow:auto;
-			resize:both;
-		}
-		.resizew>* {
-			overflow:auto;
-			resize:horizontal;
-		}
-		.resizeh>* {
-			overflow:auto;
-			resize:vertical;
 		}
 
 		.popup {
@@ -325,8 +303,10 @@
 		document.getElementById("replacements").textContent=`{
 "\\[window\\]{([\\s\\S]*?)}\\[window\\]":"[window][65%,50%]{$1}[window]",
 "\\[window\\]\\[(.*?), ?(.*?)\\]{([\\s\\S]*?)}\\[window\\]":"<iframe src=\\\"$3\\\" style=\\\"width:$1;height:$2;border:medium solid transparent;overflow:auto;\\\"></iframe>",
-"\\[center\\]{([\\s\\S]*?)}\\[center\\]":"<span class=\\\"center\\\"\\\" style=\\\"width:100%;display:block;\\\">$1</span>",
-"\\[(resizew?h?)\\]{([\\s\\S]*?)}\\[resizew?h?\\]":"<span class=\\\"$1\\\">$2</span>",
+"\\[center\\]{([\\s\\S]*?)}\\[center\\]":"<style>.center *{display:block;margin-left:auto;margin-right:auto;} .center{text-align:center;}</style><span class=\\\"center\\\"\\\" style=\\\"width:100%;display:block;\\\">$1</span>",
+"\\[(resize)\\]{([\\s\\S]*?)}\\[resize\\]":"<style>.resize>*{overflow:auto;resize:both;}</style><span class=\\\"$1\\\">$2</span>",
+"\\[(resizew)\\]{([\\s\\S]*?)}\\[resizew\\]":"<style>.resize>*{overflow:auto;resize:horizontal;}</style><span class=\\\"$1\\\">$2</span>",
+"\\[(resizeh)\\]{([\\s\\S]*?)}\\[resizeh\\]":"<style>.resize>*{overflow:auto;resize:vertical;}</style><span class=\\\"$1\\\">$2</span>",
 "\\[\\+\\+\\]{([\\s\\S]*?)}\\[\\+\\+\\]":"<span style=\\\"font-size:larger;\\\">$1</span>",
 "\\[--\\]{([\\s\\S]*?)}\\[--\\]":"<span style=\\\"font-size:smaller;\\\">$1</span>",
 "\\[style=\\\"(.*?)\\\"\\]{([\\s\\S]*?)}":"<span style=\\\"$1\\\">$2</span>",
