@@ -9,111 +9,115 @@
 	<meta name="twitter:card" content="summary_large_image"/>
 	<!--This is just a rip off of the console thing I did, but I want something I can jot notes down on nonetheless. Progress will be had later on with replacements and all that jazz. This is made to be "fileable" if needed meaning there are no external references and so it works without internet if saved locally. Trans rights.-->
 	<style>
-	* {
-		margin: 0;
-		padding: 0;
-		outline: 0px solid transparent;
-	}
-	
-	.center * {
-		display:block;
-		margin-left:auto;
-		margin-right:auto;
-	}
+		* {
+			margin: 0;
+			padding: 0;
+			outline: 0px solid transparent;
+		}
 
-	.resize>*, .resizewh>* {
-		overflow:auto;
-		resize:both;
-	}
-	.resizew>* {
-		overflow:auto;
-		resize:horizontal;
-	}
-	.resizeh>* {
-		overflow:auto;
-		resize:vertical;
-	}
+		.center * {
+			display:block;
+			margin-left:auto;
+			margin-right:auto;
+		}
 
-	.popup {
-		position:absolute;
-		width: 30%;
-		height: 40%;
-		border: solid black;
-		background-color:white;
-		border-width: 2px;
-		display: none;
-		z-index: 99;
-		resize: both;
-		overflow: hidden;
-	}
-	
-	#popup1header, #popup2header, #popup3header, #popup4header, #popup5header {
-		cursor: move;
-		z-index: 100 !important;
-		background-color: #9D9EA2;
-		text-align: center;
-		color: #FFFFFF;
-	}
-	
-	#popup1>textarea{
-		resize: none;
-		width:98%;
-		height:78%;
-		margin:1%;
-	}
-	#popup2>textarea {
-		resize: none;
-		width:98%;
-		height:92%;
-		margin:1%;
-	}
-	.popup>button {
-		width:98%;
-		height:10%;
-		margin:1%;
-	}
-	
-	#main {
-		float: left;
-		font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-		font-size: 14px;
-		height: calc(100% - 10px);
-		width: calc(100% - 10px);
-		padding: 5px;
-		display: inline-block;
-		overflow-y: auto;
-		white-space: -moz-pre-wrap;
-		white-space: -pre-wrap;
-		white-space: -o-pre-wrap;
-		white-space: pre-wrap;
-		word-wrap: break-word;
-	}
-	
-	button {
-		color: #FFFFFF;
-		border-radius: 0px;
-		font-size: 99%;
-		float: left;
-		margin: 1px;
-		padding: 0px;
-		width: calc(33.33% - 2px);
-		height: 5%;
-		display: inline-block;
-		outline: none;
-		border-width: 0px;
-		background-color: #7d7e82;
-	}
-	
-	button:active {
-		background-color: #5d5f63;
-	}
-	
-	html, body {
-		height: 100%;
-		margin: 0;
-		padding: 0;
-		width: 100%;
-	}
+		.center {
+			text-align: center;
+		}
+
+		.resize>*, .resizewh>* {
+			overflow:auto;
+			resize:both;
+		}
+		.resizew>* {
+			overflow:auto;
+			resize:horizontal;
+		}
+		.resizeh>* {
+			overflow:auto;
+			resize:vertical;
+		}
+
+		.popup {
+			position:absolute;
+			width: 30%;
+			height: 40%;
+			border: solid black;
+			background-color:white;
+			border-width: 2px;
+			display: none;
+			z-index: 99;
+			resize: both;
+			overflow: hidden;
+		}
+
+		#popup1header, #popup2header, #popup3header, #popup4header, #popup5header {
+			cursor: move;
+			z-index: 100 !important;
+			background-color: #9D9EA2;
+			text-align: center;
+			color: #FFFFFF;
+		}
+
+		#popup1>textarea{
+			resize: none;
+			width:98%;
+			height:78%;
+			margin:1%;
+		}
+		#popup2>textarea {
+			resize: none;
+			width:98%;
+			height:92%;
+			margin:1%;
+		}
+		.popup>button {
+			width:98%;
+			height:10%;
+			margin:1%;
+		}
+
+		#main {
+			float: left;
+			font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+			font-size: 14px;
+			height: calc(100% - 10px);
+			width: calc(100% - 10px);
+			padding: 5px;
+			display: inline-block;
+			overflow-y: auto;
+			white-space: -moz-pre-wrap;
+			white-space: -pre-wrap;
+			white-space: -o-pre-wrap;
+			white-space: pre-wrap;
+			word-wrap: break-word;
+		}
+
+		button {
+			color: #FFFFFF;
+			border-radius: 0px;
+			font-size: 99%;
+			float: left;
+			margin: 1px;
+			padding: 0px;
+			width: calc(33.33% - 2px);
+			height: 5%;
+			display: inline-block;
+			outline: none;
+			border-width: 0px;
+			background-color: #7d7e82;
+		}
+
+		button:active {
+			background-color: #5d5f63;
+		}
+
+		html, body {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+			width: 100%;
+		}
 	</style>
 </head>
 
