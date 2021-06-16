@@ -269,8 +269,7 @@
 				let range = selection.getRangeAt(0);
 				range.deleteContents();
 				if (document.getElementById("main").childNodes.length<2) {
-					range.insertNode(document.createElement("br"));
-					selection.collapseToEnd();
+					document.getElementById("main").appendChild(document.createElement("br"));
 				}
 				else {
 					for (let item of Array.prototype.slice.call(document.getElementById("main").childNodes).slice().reverse()) {
@@ -281,8 +280,7 @@
 							break
 						};
 						if (item.tagName!="BR") {
-							range.insertNode(document.createElement("br"));
-							selection.collapseToEnd();
+							document.getElementById("main").appendChild(document.createElement("br"));
 							break
 						}
 					}
