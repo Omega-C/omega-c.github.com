@@ -304,7 +304,7 @@
 "\\[MainStyle\\]{([\\s\\S]*?)}\\[MainStyle\\]":"<span style=\\\"overflow-y:auto;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;white-space:pre-wrap;word-wrap:break-word;font:14px Helvetica Neue, Helvetica, Arial, sans-serif;\\\">$1</span>",
 "\\[window\\]{([\\s\\S]*?)}\\[window\\]":"[window][65%,50%]{$1}[window]",
 "\\[window\\]\\[(.*?), ?(.*?)\\]{([\\s\\S]*?)}\\[window\\]":"<iframe src=\\\"$3\\\" style=\\\"width:$1;height:$2;border:medium solid transparent;overflow:auto;\\\"></iframe>",
-"\\[center\\]{([\\s\\S]*?)}\\[center\\]":"<style style=\\\"display:none;\\\">.center *{display:block;margin-left:auto;margin-right:auto;} .center{text-align:center;}</style><span class=\\\"center\\\"\\\" style=\\\"width:100%;display:block;\\\">$1</span>",
+"\\[center\\]{([\\s\\S]*?)}\\[center\\]":"<style style=\\\"display:none;\\\">.center *{display:block;margin-left:auto;margin-right:auto;} .center{text-align:center;}</style><span class=\\\"center\\\" style=\\\"width:100%;display:block;\\\">$1</span>",
 "\\[(resize)\\]{([\\s\\S]*?)}\\[resize\\]":"<style style=\\\"display:none;\\\">.resize>*{overflow:auto;resize:both;}</style><span class=\\\"$1\\\">$2</span>",
 "\\[(resizew)\\]{([\\s\\S]*?)}\\[resizew\\]":"<style style=\\\"display:none;\\\">.resizew>*{overflow:auto;resize:horizontal;}</style><span class=\\\"$1\\\">$2</span>",
 "\\[(resizeh)\\]{([\\s\\S]*?)}\\[resizeh\\]":"<style style=\\\"display:none;\\\">.resizeh>*{overflow:auto;resize:vertical;}</style><span class=\\\"$1\\\">$2</span>",
