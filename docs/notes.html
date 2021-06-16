@@ -49,16 +49,27 @@
 			height:92%;
 			margin:1%;
 		}
-		.popup>button {
+		.popup button {
+			color: #FFFFFF;
+			border-radius: 0px;
+			font-size: 99%;
+			float: left;
+			margin: 1px;
+			padding: 0px;
 			width:98%;
 			height:10%;
-			margin:1%;
+			display: inline-block;
+			outline: none;
+			border-width: 0px;
+			background-color: #7d7e82;
+		}
+		.popup button:active {
+			background-color: #5d5f63;
 		}
 
 		#main {
 			float: left;
-			font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-			font-size: 14px;
+			font: 14px Helvetica Neue, Helvetica, Arial, sans-serif;
 			height: calc(100% - 10px);
 			width: calc(100% - 10px);
 			padding: 5px;
@@ -69,25 +80,6 @@
 			white-space: -o-pre-wrap;
 			white-space: pre-wrap;
 			word-wrap: break-word;
-		}
-
-		button {
-			color: #FFFFFF;
-			border-radius: 0px;
-			font-size: 99%;
-			float: left;
-			margin: 1px;
-			padding: 0px;
-			width: calc(33.33% - 2px);
-			height: 5%;
-			display: inline-block;
-			outline: none;
-			border-width: 0px;
-			background-color: #7d7e82;
-		}
-
-		button:active {
-			background-color: #5d5f63;
 		}
 
 		html, body {
@@ -306,6 +298,10 @@
 "\\*([\\s\\S]*?)\\*":"<em>$1</em>",
 "_{([\\s\\S]*?)}_":"<sub>$1</sub>",
 "\\^{([\\s\\S]*?)}^":"<sup>$1</sup>",
+"\\[header([1-6])\\]{([\\s\\S]*?)}\\[header[1-6]?\\]":"<h$1>$2<h$1>",
+"\\[font\\]{([\\s\\S]*?)}\\[font\\]":"[font][14px Helvetica Neue, Helvetica, Arial, sans-serif]{$1}[font]",
+"\\[font\\]\\[(.*?)\\]{([\\s\\S]*?)}\\[font\\]":"<span style=\\\"font:$1;\\\">$2</span>",
+"\\[MainStyle\\]{([\\s\\S]*?)}\\[MainStyle\\]":"<span style=\\\"overflow-y:auto;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;white-space:pre-wrap;word-wrap:break-word;font:14px Helvetica Neue, Helvetica, Arial, sans-serif;\\\">$1</span>",
 "\\[window\\]{([\\s\\S]*?)}\\[window\\]":"[window][65%,50%]{$1}[window]",
 "\\[window\\]\\[(.*?), ?(.*?)\\]{([\\s\\S]*?)}\\[window\\]":"<iframe src=\\\"$3\\\" style=\\\"width:$1;height:$2;border:medium solid transparent;overflow:auto;\\\"></iframe>",
 "\\[center\\]{([\\s\\S]*?)}\\[center\\]":"<style style=\\\"display:none;\\\">.center *{display:block;margin-left:auto;margin-right:auto;} .center{text-align:center;}</style><span class=\\\"center\\\"\\\" style=\\\"width:100%;display:block;\\\">$1</span>",
