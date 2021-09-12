@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			textarea {white-space: pre-wrap;}
+			* {
+				outline: none;
+			}
+		</style>
+	</head>
+	<body>
+		<textarea id="propositions"></textarea>
+		<br/>
+		<button id="enter" onClick="clicked()">⊨</button>
+		<input type="text" id="conclusion">
+		<br/><br/>
+		<input type="text" id="output" readonly>
+		<script src="https://omega-c.github.io/PredicateLogicTable.js"></script>
+		<script>
+			UsingTable=new Table()
+			propositions=document.getElementById("propositions")
+			conclusion=document.getElementById("conclusion")
+			output=document.getElementById("output")
+			function clicked() {
+				let prop=propositions.value.replace(",","\n").replace(".","\n").replace().split("\n")
+				let conc=conclusion.value
+				let model=models(UsingTable,prop,conc)
+				output.value={"-1":"Error","0":"Vacuous","1":"Does Not Model","2":"Models"}[model.toString()]
+			}
+		</script>
+	</body>
+</html>
