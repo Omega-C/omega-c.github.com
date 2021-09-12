@@ -86,10 +86,9 @@ class Table {
 function models(table,propositions,conclusion) {
 	let prop=`((${propositions.join(")&(")}))`
 	let propTable=table.makeTable(prop)
-	if (!propTable[1].includes("1")) {return("Vacuous Truth")}
+	if (!propTable[1].includes("1")) {return(-1)}
 	let modelSyntax=prop+`<=(${conclusion})`
 	let modelTable=table.makeTable(modelSyntax)
-	console.log(modelSyntax,modelTable)
-	if (modelTable[1].includes("0")) {return("Does Not Model")}
-	return("Models")
+	if (modelTable[1].includes("0")) {return(0)}
+	return(1)
 }
