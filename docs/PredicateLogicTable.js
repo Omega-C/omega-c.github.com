@@ -1,8 +1,9 @@
 class Table {
 	constructor() {
-		this.replacables={"⇒":"<=","->":"<=","→":"<=","⊃":"<=","<->":"==","⇔":"==","≡":"==","⟷":"==","¬":"1^","~":"1^","!":"1^","∧":"&","∨":"|","⊤":"1","⊥":"0"}
+		this.elim=[" ","\n","\t","\r",".",",",";",":",'"',"'"]
+		this.replacables={" xor ":"!=","false":"0","true":"1"," also ":"&"," while ":"&"," nor ":"&"," implies ":"<="," is ":"=="," but ":"&"," not ":"1^"," and ":"&"," or ":"|","<=>":"==","=>":"<=","⇒":"<=","->":"<=","→":"<=","⊃":"<=","<->":"==","⇔":"==","≡":"==","⟷":"==","¬":"1^","~":"1^","!":"1^","∧":"&","∨":"|","⊤":"1","⊥":"0"}
 		this.replaceList={"(1)":"1","(0)":"0","1^0":"1","1^1":"0","()":""}
-		for (let symbol of ["&","|","<=","=="]) {
+		for (let symbol of ["&","|","<=","==","!="]) {
 			for (let [a,b] of this.binaryMake(2)) {
 				this.replaceList[`${a}${symbol}${b}`]=Number(eval(`${a}${symbol}${b}`)).toString()
 			}
@@ -26,6 +27,12 @@ class Table {
 	replaceVars(str) {
 		for (let key in this.replacables) {
 			str=str.replaceAll(key,this.replacables[key])
+		}
+		return(this.elimVars(str))
+	}
+	elimVars(str) {
+		for (let value of this.elim) {
+			str=str.replaceAll(value,"")
 		}
 		return(str)
 	}
@@ -53,10 +60,10 @@ class Table {
 	}
 	makeTable(str) {
 		str=this.sanitise(str)
+		str=this.replaceVars(str)
 		let resultant=[]
 		let variables=this.readVariables(str)
 		let binaryKey=this.binaryMake(variables.length).reverse()
-		str=this.replaceVars(str)
 		binaryKey.forEach((item,index)=>{
 			let news=str
 			for (let n=0;n<item.length;n++) {
@@ -69,10 +76,10 @@ class Table {
 	makeTableEval(str) {
 		/*do not use unless the input is trustworthy*/
 		str=this.sanitise(str)
+		str=this.replaceVars(str)
 		let resultant=[]
 		let variables=this.readVariables(str)
 		let binaryKey=this.binaryMake(variables.length).reverse()
-		str=this.replaceVars(str)
 		binaryKey.forEach((item,index)=>{
 			let news=str
 			for (let n=0;n<item.length;n++) {
