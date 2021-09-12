@@ -41,7 +41,7 @@ class Table {
 		if ((arr.includes("1"))&(arr.includes("0"))) {return("Possible")}
 		if (arr.includes("1")) {return("Tautology")}
 		if (arr.includes("0")) {return("Contradiction")}
-		return("err")
+		return("Err")
 	}
 	checkForReplaceOut(str) {
 		let bool=false
@@ -94,9 +94,10 @@ class Table {
 function models(table,propositions,conclusion) {
 	let prop=`((${propositions.join(")&(")}))`
 	let propTable=table.makeTable(prop)
-	if (!propTable[1].includes("1")) {return(-1)}
+	if (propTable[2]=="Err") {return(-1)}
+	if (!propTable[1].includes("1")) {return(0)}
 	let modelSyntax=prop+`<=(${conclusion})`
 	let modelTable=table.makeTable(modelSyntax)
-	if (modelTable[1].includes("0")) {return(0)}
-	return(1)
+	if (modelTable[1].includes("0")) {return(1)}
+	return(2)
 }
