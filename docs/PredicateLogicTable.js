@@ -43,3 +43,4 @@ class Table {
 		})
 		return([variables,resultant,binaryKey,this.tableInterpretation(resultant)])
 	}
+}
