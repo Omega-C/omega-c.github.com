@@ -37,10 +37,11 @@ class Table {
 		return(str)
 	}
 	tableInterpretation(arr) {
+		if (arr.length==0) {return("Vacuous")}
 		if ((arr.includes("1"))&(arr.includes("0"))) {return("Possible")}
 		if (arr.includes("1")) {return("Tautology")}
 		if (arr.includes("0")) {return("Contradiction")}
-		return("Vacuous")
+		return("err")
 	}
 	checkForReplaceOut(str) {
 		let bool=false
