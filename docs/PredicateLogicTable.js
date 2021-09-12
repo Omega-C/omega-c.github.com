@@ -26,7 +26,7 @@ class Table {
 	}
 	replaceVars(str) {
 		for (let key in this.replacables) {
-			str=str.replaceAll(key,this.replacables[key])
+			str=str.replaceAll(RegExp(key,"ig"),this.replacables[key])
 		}
 		return(this.elimVars(str))
 	}
