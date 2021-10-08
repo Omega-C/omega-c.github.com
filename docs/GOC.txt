@@ -1,23 +1,23 @@
 This is the game of complexity.
-<br>
+
 The game has 4 rules.
-<br>
-<br>
+
+
 1) You must not cause any harm to another being that is able to understand the game. There must be enforcement of this rule without violating it.
-<br>
+
 2) Points are given by defining a complex, boolean beta-reducable system. Resolving misunderstanding in other players. Convincing other players to play the game.
-<br>
+
 3) You may not be able to tell another individual how many points you beleive yourself or another individual has, yet you may be able to say and confirm if an action is rewarded points.
-<br>
+
 4) False points will not be rewarded, yet they may be indulged in for one's own sake. It must be known that the action is not made in attempt to create point.
-<br>
-<br>
+
+
 Look into booleans as a starting ground. Look into propositional logic as a starting ground. Delve into lambda and predicate calculus. Use the bare resources and other's help to enrich yourself and gain points. Identify errors in cognition that produce fallicious logic.
-<br>
-<br>
+
+
 Reach out to others, inform them on the game, identify yourself as a member of the game of complexity to other members. Beware the game of chaos.
-<br>
-<br>
-<br>
-<br>
+
+
+
+
 Good luck.
