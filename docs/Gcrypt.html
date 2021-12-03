@@ -1,0 +1,61 @@
+<html>
+<head></head>
+<body>
+<script>
+	const toUTF8=string=>string.split('').map(ch=>!ch.match(/^[^a-z0-9\s\t\r\n_|\\+()!@#$%^&*=?/~`:;'"\[\]\-]+$/i)?ch:'\\' + 'u' + '000' + ch.charCodeAt(0).toString(16)).join('');//https://stackoverflow.com/questions/21014476/javascript-convert-unicode-string-to-javascript-escape
+	const ascii="\n\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+	function chr(i){return(String.fromCharCode(i))}
+	function ord(i){return(i.charCodeAt(0))}
+	class unic{
+		constructor(){this.length=1114111-31-1536}
+		indexOf(x){
+			x=ord(x);
+			if(0xda00<=x){x+=1536};
+			if(x<33){console.log("err");return(null)};
+			return(x-33)
+		}
+		at(x){
+			if(0xda00<=x){x-=1536};
+			if(x<0){x=this.length-x+30}
+			else{x+=33};
+			return(chr(x))
+		}
+	}
+	var Unc=new unic()
+	function convc(text,t1){
+		var e=[];
+		var l=0;
+		var q=t1.length;
+		for(let i in text){
+			e.push(t1.indexOf(i))
+		};
+		for (let i=0;i<e.length;i++){
+			l+=(q**i)*e[i]
+		};
+		return(l)
+	};
+	function convt(n,t1){
+		var q=t1.length
+		var i=0;
+		let e=[];
+		while(n>q**i){
+			e.push(Math.floor((n%q**(i+1)-i)/((q)**i)));
+			i+=1
+		};
+		let qw=[];
+		for (let qww in e){qw.push(t1[qww])};
+		return(qw.join(""))
+	};
+	function decuni(txt){
+		return(convt(convc(txt,Unc),ascii))
+	};
+	function main(){
+		const params=new URLSearchParams(window.location.search);
+		var unicode=params.get("u");
+		var calm=decuni(unicode);
+		document.write(calm)
+	};
+	main()
+</script>
+</body>
+</html>
