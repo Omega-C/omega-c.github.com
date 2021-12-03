@@ -26,7 +26,7 @@
 		var e=[];
 		var l=0;
 		var q=t1.length;
-		for(let i in text){
+		for(let i of text){
 			e.push(t1.indexOf(i))
 		};
 		for (let i=0;i<e.length;i++){
@@ -43,7 +43,7 @@
 			i+=1
 		};
 		let qw=[];
-		for (let qww in e){qw.push(t1[qww])};
+		for (let qww of e){qw.push(t1[qww])};
 		return(qw.join(""))
 	};
 	function decuni(txt){
@@ -53,7 +53,7 @@
 		const params=new URLSearchParams(window.location.search);
 		var unicode=params.get("u");
 		var calm=decuni(unicode);
-		document.write(calm)
+		document.write(calm.replace("\n","<br>").replace("\t","	"))
 	};
 	main()
 </script>
